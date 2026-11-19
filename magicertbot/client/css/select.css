@@ -1,0 +1,27 @@
+/* Text can only be selected where it helps: labels, descriptions, what
+   people type, and results they may want to copy. Everything else, like
+   buttons, tabs, titles and icons, cannot be selected. */
+body { -webkit-user-select: none; user-select: none; }
+
+/* Inputs: what people type. */
+input, textarea, [contenteditable="true"] { -webkit-user-select: text; user-select: text; }
+
+/* Labels and descriptions. */
+.label, .hint, .error, .group_hint, .toggle_title, .toggle_desc,
+.intro p, .view_head p, .note_box, .drop .hint, .kv_label {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Outputs: results, reports, details, values to copy and messages. */
+[data-done], [data-report], [data-prove_body] .proof_card, .plain, dl.details,
+.list .txt, .kv_value code, code, pre, .loader_label, .life_card {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Inside outputs, buttons and small marks still cannot be selected. */
+button, .btn, .tab, .badge, .step_chip, svg, .copy_btn {
+  -webkit-user-select: none;
+  user-select: none;
+}

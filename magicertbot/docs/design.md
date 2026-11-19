@@ -20,7 +20,8 @@ All colours live in `client/css/base.css` as CSS variables.
 
 **Plus Jakarta Sans** for text, **JetBrains Mono** for codes and **Space
 Grotesk** for the main heading, which is in capitals and fills the full
-width on one line. Selected text is white on the primary blue.
+width on one line. Only labels, descriptions, inputs and results can be
+selected (`client/css/select.css`), and selected text is white on blue.
 
 ## Fields
 
