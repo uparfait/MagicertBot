@@ -1,6 +1,7 @@
 import { $, domain_ok, email_ok } from "./helpers.js";
 import { settings, clean_domains } from "./new_state.js";
 import { set_error } from "./form_tools.js";
+import { find_repeat, repeat_message } from "./domain_repeat.js";
 
 // Checks the form and returns the first field that needs fixing.
 export function find_problem() {
@@ -11,7 +12,9 @@ export function find_problem() {
   if (!domains.length) add("domains", "Please add at least one website address.", $("#domain_list input"));
   else {
     const wrong = domains.find((domain) => !domain_ok(domain));
+    const repeat = find_repeat();
     if (wrong) add("domains", `"${wrong}" does not look like a website address. Try something like example.com`, $("#domain_list input"));
+    else if (repeat) add("domains", repeat_message(repeat), $("#domain_list input"));
     else set_error("domains", "");
   }
   if (!settings.no_email && !email_ok(settings.email.trim())) add("email", "Please enter a valid email address.", $("#email"));

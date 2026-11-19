@@ -5,7 +5,8 @@
 File: `client/parts/new_settings.html` and `client/js/new_form.js`
 
 - **Website addresses** (required): one row per address. Press Enter or
-  "Add another address" for a new row.
+  "Add another address" for a new row. The same address can only be
+  added once, and you see a message the moment you type a repeat.
 - **Email address** (required unless "Sign up without email" is on):
   Let's Encrypt uses it to reach you about your account.
 - **Key type**: ECDSA (faster) or RSA (works everywhere), with its
