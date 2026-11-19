@@ -48,6 +48,11 @@ tiny script in `head.html` tells the browser to draw the page at 600px
 and scale it down to fit. So a phone shows exactly the same layout as a
 computer, only smaller. People can still pinch to zoom.
 
+## Accessibility menu
+
+An accessibility button sits at the bottom right of every page, in the
+primary blue and page background. See `client/parts/footer.html`.
+
 ## Writing style
 
 The text speaks like a helpful friend, with short sentences and simple
