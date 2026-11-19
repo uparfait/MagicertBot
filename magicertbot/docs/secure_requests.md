@@ -21,6 +21,8 @@ Files: `src/handshake.js`, `src/payload.js`, `client/js/secure_channel.js`
    every answer line with it.
 
 AES-GCM also adds a tag, so any change to the data on the way is caught.
+The page ignores any answer line that is not encrypted, except a plain
+"please refresh" error.
 Each request also carries the time it was sent, and the server refuses
 requests older than 5 minutes.
 

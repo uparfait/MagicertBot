@@ -5,13 +5,13 @@ import { seal_request, open_line, forget_server_key } from "./secure_channel.js"
 function post(url, key, envelope, handlers) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    let read_until = 0;
-    let queue = Promise.resolve();
-    let result = null;
+    let [read_until, queue, result] = [0, Promise.resolve(), null];
 
     const handle = async (line) => {
       let message = JSON.parse(line);
+      // Answers must be encrypted. Only a plain error (like "please refresh") is allowed.
       if (message.sealed) message = await open_line(key, message.sealed);
+      else if (message.type !== "error") return;
       if (message.type === "plan") handlers.on_plan?.(message.steps);
       else if (message.type === "progress") handlers.on_progress?.(message);
       else result = message;

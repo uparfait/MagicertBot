@@ -2,8 +2,12 @@ const { friendly_error } = require("./errors");
 const { seal_payload } = require("./handshake");
 
 // Sends progress to the browser while the work is still running.
-// Each update is one line of JSON, so the page can read them one by one.
+// Each update is one line, encrypted with the key from this request's
+// handshake, so the page can open and read them one by one.
 function open_stream(res) {
+  const key = res.locals.payload_key;
+  if (!key) throw new Error("Every answer must be encrypted, but this request has no key.");
+
   res.status(200);
   res.set({
     "Content-Type": "application/x-ndjson; charset=utf-8",
@@ -12,7 +16,15 @@ function open_stream(res) {
   });
   res.flushHeaders();
 
-  const send = (message) => res.write(`${JSON.stringify(message)}\n`);
+  // If the person closed the page, there is nobody left to write to.
+  const is_open = () => !res.writableEnded && !res.destroyed;
+  const send = (message) => {
+    if (is_open()) res.write(`${JSON.stringify({ sealed: seal_payload(key, message) })}\n`);
+  };
+  const finish = (message) => {
+    send(message);
+    if (is_open()) res.end();
+  };
   let steps = [];
 
   return {
@@ -26,19 +38,12 @@ function open_stream(res) {
       const percent = Math.round((index / Math.max(steps.length, 1)) * 100);
       send({ type: "progress", index, percent, text: steps[index] || "" });
     },
-    done(data) {
-      send({ type: "done", data });
-      res.end();
-    },
-    fail(message) {
-      send({ type: "error", message });
-      res.end();
-    },
+    done: (data) => finish({ type: "done", data }),
+    fail: (message) => finish({ type: "error", message }),
   };
 }
 
-// Wraps a task so it always gets a tracker and always ends with
-// either the result or a clear message.
+// Wraps a task so it always ends with either the result or a clear message.
 function stream_route(task) {
   return async (req, res) => {
     const tracker = open_stream(res);
