@@ -1,0 +1,10 @@
+{
+  "name": "MagiCertbot",
+  "short_name": "MagiCertbot",
+  "description": "Get, renew and check free Let's Encrypt SSL certificates.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f9fc",
+  "theme_color": "#4a9fd8",
+  "icons": [{ "src": "/images/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

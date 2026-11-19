@@ -1,0 +1,56 @@
+/* Progress box: a turning gear, a short note, the percent and a bar. */
+.progress { display: grid; gap: var(--space_3); }
+
+.progress_top {
+  display: flex;
+  align-items: center;
+  gap: var(--space_3);
+  font-size: 0.9375rem;
+}
+
+.progress_gear {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  color: var(--color_primary);
+  animation: gear_turn 1.6s linear infinite;
+}
+
+.progress_label { flex: 1; font-weight: 600; color: var(--color_ink); }
+
+.progress_value {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color_secondary);
+}
+
+.progress_bar {
+  height: 8px;
+  overflow: hidden;
+  background: var(--color_primary_soft);
+  border-radius: 999px;
+}
+
+.progress_fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color_primary), var(--color_secondary));
+  border-radius: inherit;
+  transition: width 0.35s ease;
+}
+
+.progress.is_done .progress_gear { animation: none; color: var(--color_success); }
+.progress.is_done .progress_fill { background: var(--color_success); }
+
+.progress.is_failed .progress_gear { animation: none; color: var(--color_danger); }
+.progress.is_failed .progress_label { font-weight: 500; color: var(--color_danger); }
+.progress.is_failed .progress_fill { background: var(--color_danger); }
+
+@keyframes gear_turn {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress_gear { animation: gear_turn 6s linear infinite !important; }
+}
