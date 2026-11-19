@@ -1,56 +1,59 @@
-// Sends JSON to the server and reports progress as a percent.
-// The upload counts for the first part of the bar, then the server
-// sends its own updates, one line of JSON at a time.
-export function send_request(url, body, { on_progress, upload_text = "" }) {
-  const upload_share = upload_text ? 25 : 0;
-  let read_until = 0;
-  let result = null;
+import { seal_request, open_line, forget_server_key } from "./secure_channel.js";
 
-  const handle_line = (message) => {
-    if (message.type !== "progress") {
-      result = message;
-      return;
-    }
-    const percent = upload_share + (message.percent * (100 - upload_share)) / 100;
-    on_progress(Math.round(percent), message.text);
-  };
-
+// Sends an encrypted request. XMLHttpRequest lets us follow the upload
+// and read each answer line the moment it arrives.
+function post(url, key, envelope, handlers) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
+    let read_until = 0;
+    let queue = Promise.resolve();
+    let result = null;
+
+    const handle = async (line) => {
+      let message = JSON.parse(line);
+      if (message.sealed) message = await open_line(key, message.sealed);
+      if (message.type === "plan") handlers.on_plan?.(message.steps);
+      else if (message.type === "progress") handlers.on_progress?.(message);
+      else result = message;
+    };
+    // Lines are opened one after another, so they always stay in order.
+    const read_lines = (text) => {
+      let end = text.indexOf("\n", read_until);
+      while (end !== -1) {
+        const line = text.slice(read_until, end).trim();
+        read_until = end + 1;
+        if (line) queue = queue.then(() => handle(line)).catch(() => {});
+        end = text.indexOf("\n", read_until);
+      }
+    };
+
     xhr.open("POST", url);
     xhr.setRequestHeader("Content-Type", "application/json");
-
     xhr.upload.onprogress = (event) => {
-      if (!upload_text || !event.lengthComputable) return;
-      on_progress(Math.round((event.loaded / event.total) * upload_share), upload_text);
+      if (event.lengthComputable) handlers.on_upload?.((event.loaded / event.total) * 100);
     };
-
-    xhr.onprogress = () => {
-      read_until = read_lines(xhr.responseText, read_until, handle_line);
-    };
-
-    xhr.onload = () => {
-      read_lines(`${xhr.responseText}\n`, read_until, handle_line);
+    xhr.onprogress = () => read_lines(xhr.responseText);
+    xhr.onload = async () => {
+      read_lines(`${xhr.responseText}\n`);
+      await queue;
       if (result && result.type === "done") return resolve(result.data);
-      reject(new Error((result && result.message) || "We could not finish that. Please try again."));
+      const error = new Error((result && result.message) || "We could not finish that. Please try again.");
+      error.code = result && result.code;
+      reject(error);
     };
-
     xhr.onerror = () => reject(new Error("We could not reach the server. Check your internet connection and try again."));
-    on_progress(0, upload_text || "Getting started");
-    xhr.send(JSON.stringify(body));
+    xhr.send(JSON.stringify(envelope));
   });
 }
 
-// Reads every full line received so far and returns where it stopped.
-function read_lines(text, start, handle_line) {
-  let end = text.indexOf("\n", start);
-  while (end !== -1) {
-    const line = text.slice(start, end).trim();
-    if (line) {
-      try { handle_line(JSON.parse(line)); } catch { /* not JSON, skip it */ }
-    }
-    start = end + 1;
-    end = text.indexOf("\n", start);
+// If the server changed its key, we do the handshake again and retry once.
+export async function send_request(url, body, handlers = {}, tries = 2) {
+  const { key, envelope } = await seal_request(body);
+  try {
+    return await post(url, key, envelope, handlers);
+  } catch (error) {
+    if (error.code !== "handshake" || tries < 2) throw error;
+    forget_server_key();
+    return send_request(url, body, handlers, tries - 1);
   }
-  return start;
 }

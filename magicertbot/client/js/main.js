@@ -1,12 +1,18 @@
 // Starts every part of the page once it has loaded.
+import { hydrate_icons } from "./icons.js";
+import { setup_copy } from "./helpers.js";
 import { setup_tabs } from "./tabs.js";
-import { setup_drop_zones } from "./files.js";
-import { setup_new_certificate } from "./new_certificate.js";
-import { setup_renew_certificate } from "./renew_certificate.js";
-import { setup_check_certificate } from "./check_certificate.js";
+import { setup_back } from "./views.js";
+import { setup_new_form } from "./new_form.js";
+import { setup_new_submit } from "./new_submit.js";
+import { setup_renew } from "./renew.js";
+import { setup_check } from "./check.js";
 
+hydrate_icons();
+setup_copy();
 setup_tabs();
-setup_drop_zones();
-setup_new_certificate();
-setup_renew_certificate();
-setup_check_certificate();
+setup_back();
+setup_new_form();
+setup_new_submit();
+setup_renew();
+setup_check();

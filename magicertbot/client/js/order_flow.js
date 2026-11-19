@@ -1,34 +1,40 @@
-import { set_step } from "./dom.js";
-import { run_with_progress } from "./run_task.js";
-import { show_dns_records } from "./dns_records.js";
-import { show_certificate } from "./certificate_result.js";
+import { $ } from "./helpers.js";
+import { show_view } from "./views.js";
+import { run_with_loader } from "./run_task.js";
+import { render_proof } from "./proof_view.js";
+import { collect_proofs } from "./proof_collect.js";
 
-// Getting a certificate happens in two parts:
-// 1. Start: Let's Encrypt gives us DNS records for you to add.
-// 2. Finish: Let's Encrypt checks them and signs your certificate.
-export async function run_order_flow({ panel, start_url, start_body, finish_body, upload_text }) {
-  const work_area = panel.querySelector("[data-work_area]");
-  work_area.replaceChildren();
-  set_step(panel, 1);
+// Getting a certificate has two parts with your proof in between:
+// 1. Start: Let's Encrypt tells us what it needs to see.
+// 2. Finish: we check your proof, Let's Encrypt confirms it and signs.
+// There is no database, so the sealed order details travel with the page.
+export async function start_order_flow({ panel, start_url, start_body, upload_text, finish_body, on_done }) {
+  $("[data-prove_lead]", panel).textContent = "We are asking Let's Encrypt what it needs to see. This takes a few seconds.";
+  $("[data-prove_body]", panel).innerHTML = '<div class="loader" data-start_loader></div>';
+  show_view(panel, "prove");
 
-  const order = await run_with_progress(work_area, start_url, start_body, upload_text);
-  set_step(panel, 2);
+  let order = null;
+  try {
+    order = await run_with_loader($("[data-start_loader]", panel), start_url, start_body, { upload_text });
+  } catch {
+    return; // The red gear shows the message, and Back is right above it.
+  }
 
-  const finish = async (button = null) => {
-    if (button) button.disabled = true;
+  render_proof(panel, order, async (method) => {
+    const proofs = collect_proofs(panel, order, method);
+    if (!proofs) return;
+
+    show_view(panel, "work");
     try {
-      const body = { ...finish_body, state: order.state };
-      const result = await run_with_progress(work_area, "/api/certificate/finish", body);
-      set_step(panel, 3);
-      work_area.replaceChildren();
-      show_certificate(work_area, result);
-    } catch {
-      // The message stays under the records, and they can check again.
-      if (button) button.disabled = false;
+      const body = { ...finish_body(), state: order.state, proofs };
+      const result = await run_with_loader($("[data-loader]", panel), "/api/certificate/finish", body);
+      on_done(result);
+    } catch (error) {
+      // Back to the proof, with the reason, so they can fix it and try again.
+      setTimeout(() => {
+        show_view(panel, "prove");
+        $("[data-prove_alert]", panel).textContent = error.message;
+      }, 1200);
     }
-  };
-
-  // If Let's Encrypt already trusts every domain, there is nothing to add.
-  if (order.records.length) show_dns_records(work_area, order, finish);
-  else finish();
+  });
 }
