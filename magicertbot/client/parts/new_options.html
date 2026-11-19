@@ -1,0 +1,33 @@
+      <details class="more">
+        <summary><span>More options<small>Name, test mode and company details</small></span><i data-icon="chev" data-class="chev"></i></summary>
+        <div class="more_body">
+          <p class="group_title">Certificate</p>
+          <div class="field">
+            <label class="label" for="cert_name">Certificate name</label>
+            <div class="input"><i data-icon="tag"></i><input type="text" id="cert_name" data-key="cert_name" spellcheck="false" autocomplete="off"></div>
+            <span class="hint">The name of the folder inside your zip. We use your first address unless you change it.</span>
+            <span class="error" data-error="cert_name"></span>
+          </div>
+          <div class="field">
+            <label class="label" for="preferred_chain">Preferred chain</label>
+            <div class="input"><i data-icon="link"></i><input type="text" id="preferred_chain" data-key="preferred_chain" placeholder="For example: ISRG Root X1" autocomplete="off"></div>
+            <span class="hint">The name of the root you want your certificate to link to. Leave it empty for the default.</span>
+          </div>
+
+          <p class="group_title">Testing</p>
+          <div>
+            <label class="toggle"><span><span class="toggle_title">Use the testing server</span><span class="toggle_desc">Get a test certificate that browsers do not trust. Good for trying things out.</span></span><input type="checkbox" class="switch" role="switch" data-key="test_cert"></label>
+            <label class="toggle"><span><span class="toggle_title">Test run only</span><span class="toggle_desc">Check that everything works without making a certificate to keep.</span></span><input type="checkbox" class="switch" role="switch" data-key="dry_run"></label>
+            <label class="toggle"><span><span class="toggle_title">Sign up without email</span><span class="toggle_desc">Not advised. Let's Encrypt will have no way to reach you.</span></span><input type="checkbox" class="switch" role="switch" data-key="no_email"></label>
+          </div>
+
+          <p class="group_title">Company details</p>
+          <div class="grid_2">
+            <div class="field"><label class="label" for="organization">Company name</label><div class="input"><i data-icon="tag"></i><input type="text" id="organization" data-key="organization" autocomplete="organization"></div></div>
+            <div class="field"><label class="label" for="country">Country code</label><div class="input"><i data-icon="globe"></i><input type="text" id="country" data-key="country" maxlength="2" placeholder="US" autocomplete="country"></div><span class="error" data-error="country"></span></div>
+            <div class="field"><label class="label" for="state">State or province</label><div class="input"><i data-icon="globe"></i><input type="text" id="state" data-key="state" autocomplete="address-level1"></div></div>
+            <div class="field"><label class="label" for="locality">City</label><div class="input"><i data-icon="globe"></i><input type="text" id="locality" data-key="locality" autocomplete="address-level2"></div></div>
+          </div>
+          <span class="hint">Optional. These go into the signing request. Let's Encrypt only prints addresses on the certificate.</span>
+        </div>
+      </details>

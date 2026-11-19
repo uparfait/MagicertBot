@@ -1,0 +1,46 @@
+/* Switch rows, the round checkbox and the "More options" box. */
+.toggle { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.toggle:last-child { border-bottom: none; }
+.toggle_title { display: block; font-weight: 600; font-size: 14px; }
+.toggle_desc { display: block; color: var(--muted); font-size: 13px; }
+
+.switch {
+  appearance: none; -webkit-appearance: none; flex: none; margin: 0; position: relative;
+  width: 48px; height: 28px; border-radius: 999px; background: #D5E0E7; border: 1.5px solid transparent;
+  cursor: pointer; transition: background .2s ease, border-color .15s ease;
+}
+.switch::before {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 19px; height: 19px; border-radius: 50%;
+  background: #fff; transition: transform .2s ease;
+}
+.switch:checked { background: var(--primary); }
+.switch:checked::before { transform: translateX(20px); }
+.switch:hover { border-color: var(--sea); }
+.switch:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px; }
+
+.check { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; font-size: 14px; }
+.checkbox {
+  appearance: none; -webkit-appearance: none; flex: none; margin: 0; width: 22px; height: 22px;
+  border-radius: 7px; background: var(--field); border: 1.5px solid var(--field_hover); cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.checkbox:hover { border-color: var(--sea); }
+.checkbox:checked {
+  background: var(--primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12l5 5 9-10' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat;
+  border-color: var(--primary);
+}
+.checkbox:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px; }
+
+details.more { margin: 6px 0 20px; border: 1.5px solid var(--line); border-radius: 24px; }
+details.more summary {
+  list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 54px; padding: 0 18px; cursor: pointer; font-weight: 600; border-radius: 24px;
+}
+details.more summary::-webkit-details-marker { display: none; }
+details.more summary:hover { background: var(--field); }
+details.more summary:focus-visible { outline: 2px solid var(--sea); outline-offset: 1px; }
+details.more summary small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
+details.more summary .chev { transition: transform .15s ease; color: var(--muted); }
+details.more[open] summary .chev { transform: rotate(180deg); }
+.more_body { padding: 0 18px 10px; }
+.more_body .group_title:first-child { margin-top: 8px; }

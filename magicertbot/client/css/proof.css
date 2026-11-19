@@ -1,0 +1,22 @@
+/* Proof cards with copyable values, notes and the "or" divider. */
+.note_box { margin-top: 16px; padding: 14px 18px; border-radius: 20px; background: var(--field); font-size: 14px; color: var(--muted); }
+.note_box code { font-family: var(--mono); font-size: 13px; }
+
+.proof_card { padding: 16px; border: 1.5px solid var(--line); border-radius: 24px; margin-bottom: 12px; }
+.proof_card h3 { margin: 0 0 10px; font-size: 15px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; word-break: break-all; }
+.proof_card .field { margin: 14px 0 0; }
+.proof_card .btn { min-height: 44px; margin-top: 4px; }
+
+.kv { margin-bottom: 10px; }
+.kv:last-child { margin-bottom: 0; }
+.kv_label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+.kv_value { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 16px; background: var(--field); border-radius: 999px; }
+.kv_value code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 13px; }
+
+.method_pick { margin-bottom: 18px; }
+
+.or_line { display: flex; align-items: center; gap: 12px; margin: 24px 0 18px; color: var(--muted); font-size: 13px; font-weight: 600; }
+.or_line::before, .or_line::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+.form_alert { margin: 16px 0 0; padding: 14px 18px; border-radius: 20px; background: var(--bad_bg); color: var(--bad); font-size: 14px; font-weight: 500; }
+.form_alert:empty { display: none; }

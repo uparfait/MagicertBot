@@ -1,0 +1,39 @@
+<section class="panel" id="panel_renew" role="tabpanel" aria-labelledby="tab_renew" {{renew_hidden}}>
+  <div data-view="upload">
+    <div class="view_head">
+      <span class="step_chip">Step 1 of 3</span>
+      <h2>Renew a certificate</h2>
+      <p>Upload the zip you got when you made your certificate. You get a fresh one for the same addresses.</p>
+    </div>
+    <div data-drop="renew"></div>
+
+    <div id="renew_setup" hidden>
+      <div id="renew_found"></div>
+
+      <p class="group_title">Renewal options</p>
+      <div>
+        <label class="toggle"><span><span class="toggle_title">Renew now, even if it is not due</span><span class="toggle_desc">We normally wait until 30 days or less are left.</span></span><input type="checkbox" class="switch" role="switch" data-renew_key="force"></label>
+        <label class="toggle"><span><span class="toggle_title">Keep the same private key</span><span class="toggle_desc">Your new certificate uses the key from your zip.</span></span><input type="checkbox" class="switch" role="switch" data-renew_key="reuse_key"></label>
+        <label class="toggle"><span><span class="toggle_title">Test run only</span><span class="toggle_desc">Check that renewing works without making a certificate to keep.</span></span><input type="checkbox" class="switch" role="switch" data-renew_key="dry_run"></label>
+      </div>
+
+      <div class="actions single"><button type="button" class="btn btn_primary" id="renew_button">Next: prove it's yours</button></div>
+    </div>
+  </div>
+
+  <div data-view="prove" hidden>
+    <button type="button" class="back" data-back="upload"><i data-icon="back"></i>Back</button>
+    <div class="view_head"><span class="step_chip">Step 2 of 3</span><h2>Prove it's still yours</h2><p data-prove_lead></p></div>
+    <div data-prove_body></div>
+  </div>
+
+  <div data-view="work" hidden>
+    <div class="view_head tight"><span class="step_chip">Step 3 of 3</span><h2>Renewing your certificate</h2><p>Let's Encrypt is checking your website. Please keep this page open.</p></div>
+    <div class="loader" data-loader></div>
+  </div>
+
+  <div data-view="done" hidden>
+    <button type="button" class="back" data-back="upload"><i data-icon="back"></i>Back</button>
+    <div data-done aria-live="polite"></div>
+  </div>
+</section>

@@ -2,15 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{title}} | MagiCertbot</title>
+  <meta name="viewport" id="viewport_meta" content="width=device-width, initial-scale=1">
+  <!-- Small screens show the page at 600px wide, scaled down, so it looks the same everywhere. -->
+  <script>if (Math.min(screen.width, screen.height) < 600) document.getElementById("viewport_meta").content = "width=600";</script>
+  <title>{{title}} from MagicertBot</title>
   <meta name="description" content="{{description}}">
+  <meta name="keywords" content="SSL certificate, HTTPS, Certbot, Let's Encrypt, renew SSL, check SSL certificate, free SSL">
   <meta name="robots" content="index, follow">
+  <meta name="author" content="MagicertBot">
   <link rel="canonical" href="{{canonical}}">
-  <meta name="theme-color" content="#4a9fd8">
+  <meta name="theme-color" content="#1B78B3">
 
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="MagiCertbot">
+  <meta property="og:site_name" content="MagicertBot">
   <meta property="og:title" content="{{title}}">
   <meta property="og:description" content="{{description}}">
   <meta property="og:url" content="{{canonical}}">
@@ -21,23 +25,28 @@
 
   <link rel="icon" href="/images/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/layout.css">
-  <link rel="stylesheet" href="/css/tabs.css">
-  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/fields.css">
+  <link rel="stylesheet" href="/css/controls.css">
+  <link rel="stylesheet" href="/css/switches.css">
   <link rel="stylesheet" href="/css/buttons.css">
-  <link rel="stylesheet" href="/css/progress.css">
+  <link rel="stylesheet" href="/css/loader.css">
   <link rel="stylesheet" href="/css/results.css">
+  <link rel="stylesheet" href="/css/proof.css">
   <script type="module" src="/js/main.js"></script>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "MagiCertbot",
+    "name": "MagicertBot",
     "url": "{{base_url}}/",
-    "description": "Get, renew and check free Let's Encrypt SSL certificates from your browser.",
+    "description": "Create, renew and check free SSL certificates for your website.",
     "applicationCategory": "SecurityApplication",
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }

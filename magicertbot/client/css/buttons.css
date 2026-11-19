@@ -1,48 +1,29 @@
-/* Buttons. Full width on phones, natural width on bigger screens. */
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space_2);
-  width: 100%;
-  min-height: 48px;
-  padding: 12px 22px;
-  font: inherit;
-  font-weight: 600;
-  color: var(--color_ink);
-  background: var(--color_primary);
-  border: 0;
-  border-radius: var(--radius_small);
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.15s, color 0.15s;
+/* Copy buttons and the main round buttons. */
+.copy_btn {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px;
+  border: 1.5px solid var(--line); border-radius: 999px; background: #fff; color: var(--sea);
+  font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
 }
+.copy_btn:hover { border-color: var(--sea); }
+.copy_btn:focus-visible { outline: 2px solid var(--sea); outline-offset: 1px; }
+.copy_btn.light { color: var(--sea); border-color: var(--line); background: #fff; }
+.copy_btn.light:hover { border-color: var(--sea); }
+.copy_btn.light:focus-visible { outline-color: var(--sea); }
 
-.button:hover { color: #fff; background: var(--color_secondary); }
-.button:disabled { opacity: 0.55; cursor: not-allowed; }
-.button:disabled:hover { color: var(--color_ink); background: var(--color_primary); }
-
-.button_quiet {
-  color: var(--color_secondary);
-  background: transparent;
-  border: 1.5px solid var(--color_border_strong);
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+  min-height: 50px; padding: 0 24px; border-radius: 999px; border: 1.5px solid transparent;
+  font-weight: 600; font-size: 15px; cursor: pointer; transition: background .15s ease, border-color .15s ease;
 }
-.button_quiet:hover { color: var(--color_ink); background: var(--color_primary_soft); }
+.btn_primary { background: var(--primary); color: #fff; }
+.btn_primary:hover { background: var(--primary_hover); }
+.btn_outline { background: #fff; color: var(--sea); border-color: var(--sea); }
+.btn_outline:hover { background: var(--sky_soft); }
+.btn:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.actions { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 22px; }
 
-.copy_button {
-  padding: 6px 10px;
-  font: inherit;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--color_secondary);
-  background: var(--color_surface);
-  border: 1.5px solid var(--color_border_strong);
-  border-radius: var(--radius_small);
-  cursor: pointer;
-  transition: border-color 0.15s;
-}
-.copy_button:hover { border-color: var(--color_primary); }
-
-@media (min-width: 640px) {
-  .button { width: auto; justify-self: start; }
+@media (min-width: 600px) {
+  .actions { grid-template-columns: 1fr 1fr; }
+  .actions.single { grid-template-columns: 1fr; }
 }

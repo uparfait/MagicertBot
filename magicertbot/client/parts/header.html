@@ -1,38 +1,28 @@
 <body>
 <a class="skip_link" href="#main_content">Skip to main content</a>
 
-<header class="site_header">
-  <div class="container header_inner">
-    <a class="brand" href="/">
-      <img src="/images/icon.svg" alt="" width="36" height="36">
-      <span>MagiCertbot</span>
-    </a>
-  </div>
+<header class="wrap top">
+  <a class="brand" href="/" aria-label="MagicertBot home">
+    <img src="/images/icon.svg" alt="" width="36" height="36">
+    <span>MagicertBot</span>
+  </a>
 </header>
 
-<main id="main_content" class="container">
-  <section class="intro" aria-labelledby="page_title">
-    <h1 id="page_title">Free SSL certificates, made simple</h1>
-    <p>
-      Get a new certificate, renew the one you have, or check any certificate.
-      Everything comes from Let's Encrypt, and we never keep your files.
-    </p>
+<main class="wrap" id="main_content">
+  <section class="intro">
+    <h1>Free SSL certificates, made simple</h1>
+    <p>Create, renew and check the certificates that keep your website on HTTPS.</p>
   </section>
 
-  <noscript>
-    <p class="notice">This tool needs JavaScript turned on to talk to Let's Encrypt.</p>
-  </noscript>
+  <noscript><p class="plain">This tool needs JavaScript turned on to talk to Let's Encrypt.</p></noscript>
 
-  <nav aria-label="Certificate tools">
-    <div class="tab_list" role="tablist">
-      <a class="tab" role="tab" id="tab_new" href="/" aria-controls="panel_new"
-         aria-selected="{{new_selected}}" tabindex="{{new_tabindex}}"
-         data-title="{{new_title}}">New certificate</a>
-      <a class="tab" role="tab" id="tab_renew" href="/renew" aria-controls="panel_renew"
-         aria-selected="{{renew_selected}}" tabindex="{{renew_tabindex}}"
-         data-title="{{renew_title}}">Renew</a>
-      <a class="tab" role="tab" id="tab_check" href="/check" aria-controls="panel_check"
-         aria-selected="{{check_selected}}" tabindex="{{check_tabindex}}"
-         data-title="{{check_title}}">Check</a>
-    </div>
+  <nav class="tabs" role="tablist" aria-label="Choose what to do">
+    <a class="tab" role="tab" id="tab_new" href="/" aria-controls="panel_new"
+       aria-selected="{{new_selected}}" tabindex="{{new_tabindex}}" data-title="{{new_title}}">New <span class="long">certificate</span></a>
+    <span class="tab_line" aria-hidden="true">Or</span>
+    <a class="tab" role="tab" id="tab_renew" href="/renew" aria-controls="panel_renew"
+       aria-selected="{{renew_selected}}" tabindex="{{renew_tabindex}}" data-title="{{renew_title}}">Renew <span class="long">certificate</span></a>
+    <span class="tab_line" aria-hidden="true">Or</span>
+    <a class="tab" role="tab" id="tab_check" href="/check" aria-controls="panel_check"
+       aria-selected="{{check_selected}}" tabindex="{{check_tabindex}}" data-title="{{check_title}}">Check <span class="long">certificate</span></a>
   </nav>

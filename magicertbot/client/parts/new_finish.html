@@ -1,0 +1,27 @@
+      <div class="field" style="margin-bottom:0">
+        <label class="check"><input type="checkbox" class="checkbox" data-key="agree" aria-required="true"><span>I agree to the <a href="https://letsencrypt.org/repository/" target="_blank" rel="noopener">Let's Encrypt terms of use</a>. <span class="required" aria-hidden="true">*</span></span></label>
+        <span class="error" data-error="agree"></span>
+      </div>
+
+      <div class="actions single">
+        <button class="btn btn_primary" type="submit">Next: prove it's yours</button>
+      </div>
+    </form>
+  </div>
+
+  <div data-view="prove" hidden>
+    <button type="button" class="back" data-back="form"><i data-icon="back"></i>Back</button>
+    <div class="view_head"><span class="step_chip">Step 2 of 3</span><h2>Prove it's yours</h2><p data-prove_lead></p></div>
+    <div data-prove_body></div>
+  </div>
+
+  <div data-view="work" hidden>
+    <div class="view_head tight"><span class="step_chip">Step 3 of 3</span><h2>Creating your certificate</h2><p>Let's Encrypt is checking your website. Please keep this page open.</p></div>
+    <div class="loader" data-loader></div>
+  </div>
+
+  <div data-view="done" hidden>
+    <button type="button" class="back" data-back="form"><i data-icon="back"></i>Back to settings</button>
+    <div data-done aria-live="polite"></div>
+  </div>
+</section>

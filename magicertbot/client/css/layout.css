@@ -1,59 +1,55 @@
-/* Page frame: header, main area, cards and footer. Phone sizes come first. */
-.container {
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 var(--space_4);
+/* Header, tabs, the white panel and the head of each step. */
+.wrap { width: 100%; max-width: 720px; margin: 0 auto; padding: 0 16px; }
+.top { padding: 20px 16px 0; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+.brand span { font-size: 19px; font-weight: 700; letter-spacing: -.2px; }
+.intro { padding: 28px 0 8px; }
+.intro h1 { margin: 0; font-size: 26px; line-height: 1.25; letter-spacing: -.5px; }
+.intro p { margin: 10px 0 0; color: var(--muted); font-size: 16px; }
+
+/* Tabs look like pills joined by a short line. */
+.tabs { display: flex; align-items: center; margin: 24px 0 18px; }
+.tab {
+  flex: 1 1 0; min-width: 0; min-height: 46px; padding: 8px 10px;
+  display: flex; align-items: center; justify-content: center; gap: .3em;
+  border: 1.5px solid transparent; border-radius: 999px; background: var(--tab);
+  color: var(--sea); font-weight: 600; font-size: 14px; text-decoration: none; cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
 }
+.tab:hover { border-color: var(--sky); }
+.tab[aria-selected="true"] { background: var(--primary); color: #fff; }
+.tab:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px; }
+.tab .long { display: none; }
+/* The joining line between tabs, with a small "Or" in its middle. */
+.tab_line { flex: 0 0 34px; display: flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 700; color: var(--sea); }
+.tab_line::before, .tab_line::after { content: ""; flex: 1; height: 4px; background: var(--tab); }
 
-.skip_link {
-  position: absolute; left: var(--space_3); top: -60px; z-index: 10;
-  padding: var(--space_2) var(--space_3);
-  color: #fff; background: var(--color_ink);
-  border-radius: var(--radius_small);
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 22px 16px 24px; }
+.view_head { margin-bottom: 22px; }
+.view_head.tight { margin-bottom: 0; }
+.step_chip { display: inline-block; font-size: 12px; font-weight: 700; color: var(--sea); background: var(--sky_soft); padding: 4px 10px; border-radius: 999px; }
+.view_head h2 { margin: 10px 0 4px; font-size: 21px; letter-spacing: -.3px; }
+.view_head h2:focus { outline: none; }
+.view_head p { margin: 0; color: var(--muted); }
+
+.back {
+  display: inline-flex; align-items: center; gap: 6px; margin: -6px 0 14px -6px;
+  min-height: 40px; padding: 6px 14px 6px 10px; border: 1.5px solid transparent; border-radius: 999px;
+  background: transparent; color: var(--sea); font-weight: 600; cursor: pointer;
 }
-.skip_link:focus { top: var(--space_3); color: #fff; }
+.back:hover { background: var(--sky_soft); }
+.back:focus-visible { outline: 2px solid var(--sea); outline-offset: 1px; }
+.group_title { margin: 26px 0 12px; font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
 
-.site_header { background: var(--color_surface); border-bottom: 1px solid var(--color_border); }
-.header_inner { display: flex; align-items: center; min-height: 60px; }
+footer { padding: 30px 16px 40px; text-align: center; color: var(--muted); font-size: 13px; }
+footer p { margin: 0 0 6px; }
 
-.brand {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-weight: 700; font-size: 1.0625rem;
-  color: var(--color_ink); text-decoration: none;
-}
-
-.intro { padding: var(--space_6) 0 var(--space_5); }
-.intro p { max-width: 60ch; font-size: 1.0625rem; color: var(--color_muted); }
-
-.panel_intro { margin: var(--space_5) 0 var(--space_4); }
-.panel_intro p { color: var(--color_muted); }
-
-.card {
-  padding: var(--space_4);
-  background: var(--color_surface);
-  border: 1px solid var(--color_border);
-  border-radius: var(--radius);
-}
-
-.work_area { display: grid; gap: var(--space_4); margin-top: var(--space_4); }
-.work_area:empty { display: none; }
-.check_grid { display: grid; gap: var(--space_4); }
-
-.notice {
-  margin: 0 0 var(--space_4); padding: 10px 12px;
-  color: var(--color_ink); background: var(--color_primary_soft);
-  border-radius: var(--radius_small); font-size: 0.9375rem;
-}
-
-.site_footer {
-  margin-top: var(--space_7); padding: var(--space_5) 0;
-  border-top: 1px solid var(--color_border);
-  font-size: 0.875rem; color: var(--color_muted);
-}
-
-@media (min-width: 640px) {
-  .intro { padding: var(--space_7) 0 var(--space_5); }
-  .card { padding: var(--space_5); }
-  .check_grid { grid-template-columns: 1fr 1fr; align-items: start; }
+@media (min-width: 600px) {
+  .top { padding-top: 28px; }
+  .intro { padding-top: 44px; }
+  .intro h1 { font-size: 34px; }
+  .tab { font-size: 15px; }
+  .tab .long { display: inline; }
+  .tab_line { flex-basis: 64px; gap: 6px; font-size: 12px; }
+  .panel { padding: 32px; }
 }

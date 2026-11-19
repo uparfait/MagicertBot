@@ -1,0 +1,43 @@
+/* Upload area, chosen file card and the turning gear loader. */
+.drop {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  min-height: 170px; padding: 22px; text-align: center; cursor: pointer;
+  background: var(--field); border: 1.5px dashed var(--field_hover); border-radius: 28px;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.drop:hover, .drop.dragging { border-color: var(--sea); background: var(--sky_soft); }
+.drop:focus-within { border-color: var(--sea); }
+.drop input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.drop_icon { width: 52px; height: 52px; border-radius: 999px; background: #fff; color: var(--primary); display: grid; place-items: center; margin-bottom: 4px; }
+.drop strong { font-size: 15px; }
+.drop .hint { max-width: 340px; }
+.drop.busy { cursor: default; pointer-events: none; }
+.file_card { display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 16px; border: 1.5px solid var(--line); border-radius: 999px; }
+.file_card .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.file_card .size { color: var(--muted); font-size: 13px; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.gear { color: var(--sky); animation: spin 1.6s linear infinite; }
+.gear.still { animation: none; }
+.loader { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 18px 0 4px; }
+.loader > .gear { width: 64px; height: 64px; }
+.loader.failed > .gear { animation: none; color: var(--bad); }
+.loader_pct { margin-top: 12px; font-size: 36px; font-weight: 700; color: var(--sea); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.loader_label { margin: 6px 0 16px; color: var(--muted); min-height: 24px; }
+.loader.failed .loader_label { color: var(--bad); font-weight: 500; }
+.bar { display: block; width: 100%; height: 10px; background: var(--field); border-radius: 999px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--sky), var(--sea)); }
+.loader_steps { list-style: none; margin: 22px 0 0; padding: 0; width: 100%; text-align: left; }
+.loader_steps li { display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--placeholder); font-size: 14px; }
+.loader_steps .dot { width: 22px; height: 22px; flex: none; display: grid; place-items: center; }
+.loader_steps .dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.loader_steps li.now { color: var(--text); font-weight: 600; }
+.loader_steps li.now .dot::before, .loader_steps li.done .dot::before { display: none; }
+.loader_steps li.done { color: var(--muted); }
+.loader_steps li.done .dot { color: var(--good); }
+.loader_steps .gear { width: 18px; height: 18px; }
+.mini_load { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; max-width: 320px; margin: 0 auto; }
+.mini_load .gear { width: 40px; height: 40px; }
+.mini_load .pct { font-size: 22px; font-weight: 700; color: var(--sea); font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) { .gear { animation-duration: 4s; } }

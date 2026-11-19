@@ -1,0 +1,55 @@
+/* Text fields are round pills with an icon on the left.
+   No shadows or rings: only the border changes on hover and focus. */
+.field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+.label { font-size: 14px; font-weight: 600; }
+.hint { font-size: 13px; color: var(--muted); }
+.error { font-size: 13px; color: var(--bad); font-weight: 500; }
+.error:empty { display: none; }
+.required { color: var(--mauve); font-weight: 700; }
+.required_note { margin: 8px 0 0; }
+.grid_2 { display: grid; grid-template-columns: 1fr; gap: 0 14px; }
+
+.input { position: relative; display: flex; align-items: center; }
+.input > svg.i { position: absolute; left: 18px; color: var(--muted); pointer-events: none; }
+.input input {
+  width: 100%; height: 48px; padding: 0 18px 0 48px;
+  background: var(--field); border: 1.5px solid transparent; border-radius: 999px;
+  outline: none; box-shadow: none; cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.input input::placeholder { color: var(--placeholder); }
+.input input:hover { border-color: var(--field_hover); }
+.input input:focus { border-color: var(--sea); background: #fff; cursor: text; outline: none; box-shadow: none; }
+.input.mono input { font-family: var(--mono); font-size: 14px; }
+.field.has_error .input input, .field.has_error .select_btn { border-color: var(--bad); }
+
+/* Keep autofilled fields in their own colours. */
+.input input:-webkit-autofill, .input input:-webkit-autofill:hover {
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 1000px var(--field) inset;
+  caret-color: var(--text);
+  transition: background-color 9999s ease 0s, border-color .15s ease;
+}
+.input input:-webkit-autofill:focus { -webkit-text-fill-color: var(--text); -webkit-box-shadow: 0 0 0 1000px #fff inset; }
+.input input:autofill { background: var(--field); }
+
+/* Address rows with a remove button, and the "add another" button. */
+.domain_list { display: flex; flex-direction: column; gap: 10px; }
+.domain_row { display: flex; gap: 8px; align-items: center; }
+.domain_row .input { flex: 1; }
+.icon_btn {
+  flex: none; width: 44px; height: 44px; display: grid; place-items: center;
+  border: 1.5px solid var(--line); border-radius: 999px; background: #fff; color: var(--muted); cursor: pointer;
+}
+.icon_btn:hover { border-color: var(--bad); color: var(--bad); }
+.icon_btn:focus-visible { outline: 2px solid var(--sea); outline-offset: 1px; }
+.add_btn {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; margin-top: 4px;
+  min-height: 44px; padding: 4px 16px 4px 4px; border: 1.5px solid transparent; border-radius: 999px;
+  background: transparent; color: var(--sea); font-weight: 600; cursor: pointer;
+}
+.add_btn .plus { width: 36px; height: 36px; border-radius: 999px; display: grid; place-items: center; background: var(--primary); color: #fff; }
+.add_btn:hover { background: var(--sky_soft); }
+.add_btn:focus-visible { outline: 2px solid var(--sea); outline-offset: 1px; }
+
+@media (min-width: 600px) { .grid_2 { grid-template-columns: 1fr 1fr; } }
