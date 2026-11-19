@@ -1,7 +1,7 @@
 /* Results: the top line, badges, days left, plain summary and lists. */
 .hero { display: flex; gap: 14px; align-items: center; margin-bottom: 18px; }
 .hero > .ico { width: 48px; height: 48px; flex: none; border-radius: 999px; display: grid; place-items: center; background: var(--bad_bg); color: var(--bad); }
-.hero h2 { margin: 0; font-size: 21px; letter-spacing: -.3px; }
+.hero h2 { margin: 0; font-size: 25px; letter-spacing: -.4px; }
 .hero h2:focus { outline: none; }
 .hero p { margin: 4px 0 0; color: var(--muted); line-height: 1.5; }
 

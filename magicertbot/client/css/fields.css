@@ -1,11 +1,13 @@
 /* Text fields are round pills with an icon on the left.
    No shadows or rings: only the border changes on hover and focus. */
 .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
-.label { font-size: 15px; font-weight: 600; line-height: 1.4; }
+.label { font-size: 16px; font-weight: 700; line-height: 1.4; color: var(--text); }
 .hint { font-size: 14px; line-height: 1.55; color: var(--muted); }
 .error { font-size: 14px; line-height: 1.55; color: var(--bad); font-weight: 500; }
 /* Labels, hints and messages line up with the text inside the round fields. */
 .field > .label, .field > .hint, .field > .error { padding: 0 18px; }
+/* A hint sits right under its label, above the field. Errors go under the field. */
+.field > .label + .hint { margin-top: -4px; }
 .error:empty { display: none; }
 .required { color: var(--mauve); font-weight: 700; }
 .required_note { display: block; margin: 12px 0 0; }

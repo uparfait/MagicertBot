@@ -12,7 +12,7 @@ export const checklist = (items) => `<ul class="list" style="margin-bottom:16px"
 
 // The check file: its name is a unique ID from Let's Encrypt.
 export function http_card(proof, index) {
-  return `<div class="proof_card">
+  return `<div class="proof_card tone_sky">
     <h3>${icon("globe")}${esc(proof.label)} <span class="badge info">Check file</span></h3>
     ${kv("File name (your unique ID)", proof.http.token)}
     ${kv("Put it in this folder of your website", "/.well-known/acme-challenge/")}
@@ -20,8 +20,8 @@ export function http_card(proof, index) {
     <button type="button" class="btn btn_outline" data-download_proof="${index}">${icon("download")}Download check file</button>
     <div class="field">
       <label class="label" for="proof_url_${index}">Paste the address where your file opens <span class="required" aria-hidden="true">*</span></label>
-      <div class="input mono">${icon("link")}<input type="url" id="proof_url_${index}" data-proof_url="${index}" aria-required="true" placeholder="${esc(proof.http.url)}" spellcheck="false" autocomplete="off"></div>
-      <span class="hint">It must be on ${esc(proof.domain)}, the address you entered before.</span>
+      <span class="hint" id="proof_hint_${index}">It must be on ${esc(proof.domain)}, the address you entered before.</span>
+      <div class="input mono">${icon("link")}<input type="url" id="proof_url_${index}" data-proof_url="${index}" aria-required="true" aria-describedby="proof_hint_${index}" placeholder="${esc(proof.http.url)}" spellcheck="false" autocomplete="off"></div>
       <span class="error" data-proof_error="${index}"></span>
     </div>
   </div>`;
@@ -29,7 +29,7 @@ export function http_card(proof, index) {
 
 // The DNS record to add.
 export function dns_card(proof) {
-  return `<div class="proof_card">
+  return `<div class="proof_card tone_mint">
     <h3>${icon("dns")}${esc(proof.label)} <span class="badge info">TXT record</span></h3>
     ${kv("Record type", "TXT")}
     ${kv("Name", proof.dns.name)}

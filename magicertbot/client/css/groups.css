@@ -1,0 +1,29 @@
+/* Each group of related settings sits in its own softly coloured box,
+   so the groups are easy to tell apart. Fields inside a box are white. */
+.option_group {
+  --field: #FFFFFF;
+  margin: 0 0 20px;
+  padding: 20px 18px 4px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+}
+.option_group > .group_title { margin: 0 0 16px; }
+.option_group > .group_hint { margin: -8px 0 18px; }
+.option_group > [data-drop] { margin-bottom: 18px; }
+.option_group > .toggle:first-of-type { padding-top: 4px; }
+
+.tone_sky { background: #F1F7FC; }
+.tone_mint { background: #EFF8F3; }
+.tone_sand { background: #FBF6EC; }
+.tone_mauve { background: #F7F1F7; }
+.tone_slate { background: #F2F5F8; }
+
+/* Proof cards use the same tones, with white boxes for the values. */
+.proof_card.tone_sky, .proof_card.tone_mint { --field: #FFFFFF; }
+
+.more_body .option_group { margin: 18px 0 0; }
+.more_body .option_group:last-child { margin-bottom: 4px; }
+
+@media (min-width: 600px) {
+  .option_group { padding: 24px 24px 6px; }
+}

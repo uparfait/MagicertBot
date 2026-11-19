@@ -8,7 +8,7 @@
 .drop:hover, .drop.dragging { border-color: var(--sea); background: var(--sky_soft); }
 .drop:focus-within { border-color: var(--sea); }
 .drop input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-.drop_icon { width: 52px; height: 52px; border-radius: 999px; background: #fff; color: var(--primary); display: grid; place-items: center; margin-bottom: 4px; }
+.drop_icon { width: 52px; height: 52px; border-radius: 999px; background: var(--sky_soft); color: var(--primary); display: grid; place-items: center; margin-bottom: 4px; }
 .drop strong { font-size: 16px; }
 .drop .hint { max-width: 360px; line-height: 1.55; }
 .drop.busy { cursor: default; pointer-events: none; }

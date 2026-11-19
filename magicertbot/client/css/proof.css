@@ -3,7 +3,7 @@
 .note_box code { font-family: var(--mono); font-size: 13px; }
 
 .proof_card { padding: 20px; border: 1.5px solid var(--line); border-radius: 24px; margin-bottom: 16px; }
-.proof_card h3 { margin: 0 0 16px; font-size: 15px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; word-break: break-all; }
+.proof_card h3 { margin: 0 0 16px; font-size: 17px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; word-break: break-all; }
 .proof_card .field { margin: 14px 0 0; }
 .proof_card .btn { min-height: 44px; margin-top: 4px; }
 

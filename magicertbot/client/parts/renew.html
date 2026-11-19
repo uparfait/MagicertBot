@@ -5,17 +5,20 @@
       <h2>Renew a certificate</h2>
       <p>Upload the zip you got when you made your certificate. You get a fresh one for the same addresses.</p>
     </div>
-    <div data-drop="renew"></div>
+    <section class="option_group tone_sky" aria-labelledby="group_upload">
+      <p class="group_title" id="group_upload">Your zip</p>
+      <div data-drop="renew"></div>
+    </section>
 
     <div id="renew_setup" hidden>
       <div id="renew_found"></div>
 
-      <p class="group_title">Renewal options</p>
-      <div>
+      <section class="option_group tone_sand" aria-labelledby="group_renewal">
+        <p class="group_title" id="group_renewal">Renewal options</p>
         <label class="toggle"><span><span class="toggle_title">Renew now, even if it is not due</span><span class="toggle_desc">We normally wait until 30 days or less are left.</span></span><input type="checkbox" class="switch" role="switch" data-renew_key="force"></label>
         <label class="toggle"><span><span class="toggle_title">Keep the same private key</span><span class="toggle_desc">Your new certificate uses the key from your zip.</span></span><input type="checkbox" class="switch" role="switch" data-renew_key="reuse_key"></label>
         <label class="toggle"><span><span class="toggle_title">Test run only</span><span class="toggle_desc">Check that renewing works without making a certificate to keep.</span></span><input type="checkbox" class="switch" role="switch" data-renew_key="dry_run"></label>
-      </div>
+      </section>
 
       <div class="actions single"><button type="button" class="btn btn_primary" id="renew_button">Next: prove it's yours</button></div>
     </div>

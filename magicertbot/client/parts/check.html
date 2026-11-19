@@ -5,18 +5,22 @@
       <h2>Check a certificate</h2>
       <p>Upload your certificate zip. We look at every file inside.</p>
     </div>
-    <div data-drop="check"></div>
+    <section class="option_group tone_sky" aria-labelledby="group_zip">
+      <p class="group_title" id="group_zip">From your zip</p>
+      <div data-drop="check"></div>
+    </section>
 
-    <p class="or_line">or check a live website</p>
+    <p class="or_line">or</p>
 
-    <form id="site_form" novalidate>
+    <form id="site_form" class="option_group tone_mint" aria-labelledby="group_site" novalidate>
+      <p class="group_title" id="group_site">From a live website</p>
       <div class="field">
         <label class="label" for="site_address">Website address <span class="required" aria-hidden="true">*</span></label>
-        <div class="input"><i data-icon="globe"></i><input type="text" id="site_address" name="site_address" aria-required="true" placeholder="example.com" inputmode="url" autocomplete="url" spellcheck="false"></div>
-        <span class="hint">We read the certificate it uses right now.</span>
+        <span class="hint" id="site_address_hint">We read the certificate it uses right now.</span>
+        <div class="input"><i data-icon="globe"></i><input type="text" id="site_address" name="site_address" aria-required="true" aria-describedby="site_address_hint" placeholder="example.com" inputmode="url" autocomplete="url" spellcheck="false"></div>
         <span class="error" data-error="site_address"></span>
       </div>
-      <div class="actions single" style="margin-top:6px">
+      <div class="actions single" style="margin:0 0 14px">
         <button class="btn btn_outline" type="submit"><i data-icon="shield"></i>Check website</button>
       </div>
     </form>

@@ -20,14 +20,16 @@ White text on the primary blue passes the WCAG AA level.
 
 ## Fonts
 
-**Plus Jakarta Sans** for text and **JetBrains Mono** for codes, both from
-Google Fonts. If they cannot load, the system font is used.
+**Plus Jakarta Sans** for text and **JetBrains Mono** for codes, from Google
+Fonts. The main heading is in capitals and fills the full width on one line.
 
 ## Fields
 
 Files: `client/css/fields.css`, `client/css/controls.css`
 
-- Fields are round pills with an icon on the left.
+- Each field reads top to bottom: label, hint, the field, then any error.
+- Related fields sit together in a softly tinted box (`client/css/groups.css`).
+- Fields are round pills with an icon, and every one has a placeholder.
 - A soft border at rest, and no shadow or glow ring. Only the border
   colour changes: light blue on hover, sea blue on focus.
 - Autofill never changes a field's colours (see `client/css/autofill.css`).
@@ -43,15 +45,13 @@ explains it. The input also has `aria-required="true"`.
 
 ## Every screen looks the same
 
-The page is built for screens 600px wide and more. On a smaller screen, a
-tiny script in `head.html` tells the browser to draw the page at 600px
-and scale it down to fit. So a phone shows exactly the same layout as a
-computer, only smaller. People can still pinch to zoom.
+On screens under 600px, a tiny script in `head.html` draws the page at
+600px and scales it down, so a phone shows the same layout, only smaller.
 
 ## Accessibility menu
 
-An accessibility button sits at the bottom right of every page: a primary
-blue background with a light icon. See `client/parts/footer.html`.
+An accessibility button sits at the bottom right of every page, set to the
+light page colour `#F4F7FA`. See `client/parts/footer.html`.
 
 ## Writing style
 
