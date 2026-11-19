@@ -50,8 +50,8 @@ On screens under 600px, a tiny script in `head.html` draws the page at
 
 ## Accessibility menu
 
-An accessibility button sits at the bottom right of every page, set to the
-light page colour `#F4F7FA`. See `client/parts/footer.html`.
+An accessibility button sits at the bottom right of every page: a white
+background with the light page colour `#F4F7FA`. See `client/parts/footer.html`.
 
 ## Writing style
 
