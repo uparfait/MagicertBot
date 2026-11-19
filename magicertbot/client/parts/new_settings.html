@@ -10,10 +10,10 @@
     <form id="new_form" novalidate>
       <div class="field">
         <span class="label" id="domains_label">Website addresses <span class="required" aria-hidden="true">*</span></span>
-        <div class="domain_list" id="domain_list" role="group" aria-labelledby="domains_label"></div>
-        <button type="button" class="add_btn" id="add_domain"><span class="plus"><i data-icon="plus"></i></span>Add another address</button>
-        <span class="hint">Add each address you want covered, like example.com and www.example.com. Use *.example.com to cover every sub address.</span>
+        <div class="domain_list" id="domain_list" role="group" aria-labelledby="domains_label" aria-describedby="domains_hint"></div>
+        <span class="hint" id="domains_hint">Add each address you want covered, like example.com and www.example.com. Use *.example.com to cover every sub address.</span>
         <span class="error" data-error="domains"></span>
+        <button type="button" class="add_btn" id="add_domain"><span class="plus"><i data-icon="plus"></i></span>Add another address</button>
       </div>
 
       <div class="field" data-show="no_email:false">

@@ -1,8 +1,8 @@
 /* The custom dropdown and the two-way choice. */
 .select { position: relative; }
 .select_btn {
-  width: 100%; height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 16px 0 18px;
-  background: var(--field); border: 1.5px solid transparent; border-radius: 999px;
+  width: 100%; height: 50px; display: flex; align-items: center; gap: 10px; padding: 0 16px 0 18px;
+  background: var(--field); border: 1.5px solid var(--field_border); border-radius: 999px;
   text-align: left; cursor: pointer; transition: border-color .15s ease, background-color .15s ease;
 }
 .select_btn:hover { border-color: var(--field_hover); }
@@ -15,17 +15,17 @@
   margin: 0; padding: 6px; list-style: none; max-height: 300px; overflow: auto;
   background: #fff; border: 1.5px solid var(--line); border-radius: 22px; outline: none;
 }
-.select_list li { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; border-radius: 16px; cursor: pointer; }
+.select_list li { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; cursor: pointer; }
 .select_list .opt_check { visibility: hidden; color: var(--primary); margin-top: 2px; }
 .select_list li[aria-selected="true"] .opt_check { visibility: visible; }
 .select_list li[aria-selected="true"] { font-weight: 600; }
 .select_list li:hover, .select_list li.active { background: var(--field); }
-.select_list small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
+.select_list small { display: block; margin-top: 2px; font-weight: 400; color: var(--muted); font-size: 14px; }
 
-.segmented { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--field); border-radius: 999px; border: 1.5px solid transparent; transition: border-color .15s ease; }
+.segmented { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--field); border-radius: 999px; border: 1.5px solid var(--field_border); transition: border-color .15s ease; }
 .segmented:hover { border-color: var(--field_hover); }
 .segmented button {
-  min-height: 40px; border: none; border-radius: 999px; background: transparent; color: var(--muted);
+  min-height: 42px; border: none; border-radius: 999px; font-size: 15px; background: transparent; color: var(--muted);
   font-weight: 600; cursor: pointer; transition: background .15s ease, color .15s ease;
 }
 .segmented button small { display: none; font-weight: 500; opacity: .85; }

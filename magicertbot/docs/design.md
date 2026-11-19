@@ -1,7 +1,6 @@
 # Design
 
-Calm, simple and friendly: round shapes, soft blues, plenty of space, and
-one clear action at a time.
+Calm and friendly: round shapes, soft blues and one clear action at a time.
 
 ## Colours
 
@@ -14,10 +13,10 @@ All colours live in `client/css/base.css` as CSS variables.
 | Sea | `#0C5A8A` | Links, focus borders, big numbers |
 | Background | `#F4F7FA` | The page behind the white panel |
 | Field | `#EEF3F7` | The inside of every field |
+| Field border | `#D3DEE6` | The soft border every field has at rest |
 | Mauve | `#8E5B8A` | The `*` on required fields |
 
-White text on the primary blue is easy to read and passes the WCAG AA
-level.
+White text on the primary blue passes the WCAG AA level.
 
 ## Fonts
 
@@ -29,8 +28,9 @@ Google Fonts. If they cannot load, the system font is used.
 Files: `client/css/fields.css`, `client/css/controls.css`
 
 - Fields are round pills with an icon on the left.
-- They have no shadow and no glow ring. Only the border changes: light
-  blue on hover, sea blue on focus.
+- A soft border at rest, and no shadow or glow ring. Only the border
+  colour changes: light blue on hover, sea blue on focus.
+- Autofill never changes a field's colours (see `client/css/autofill.css`).
 - Dropdowns are custom lists that match the fields and work with the
   arrow keys, Enter and Escape.
 - Choices with two options are a sliding pill (a segmented control).

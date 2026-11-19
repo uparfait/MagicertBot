@@ -1,8 +1,8 @@
 /* Switch rows, the round checkbox and the "More options" box. */
-.toggle { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.toggle { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 4px; border-bottom: 1px solid var(--line); cursor: pointer; }
 .toggle:last-child { border-bottom: none; }
-.toggle_title { display: block; font-weight: 600; font-size: 14px; }
-.toggle_desc { display: block; color: var(--muted); font-size: 13px; }
+.toggle_title { display: block; font-weight: 600; font-size: 15px; line-height: 1.4; }
+.toggle_desc { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; line-height: 1.55; }
 
 .switch {
   appearance: none; -webkit-appearance: none; flex: none; margin: 0; position: relative;
@@ -18,7 +18,7 @@
 .switch:hover { border-color: var(--sea); }
 .switch:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px; }
 
-.check { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; font-size: 14px; }
+.check { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; font-size: 15px; line-height: 1.5; padding: 0 4px; }
 .checkbox {
   appearance: none; -webkit-appearance: none; flex: none; margin: 0; width: 22px; height: 22px;
   border-radius: 7px; background: var(--field); border: 1.5px solid var(--field_hover); cursor: pointer;
@@ -34,13 +34,13 @@
 details.more { margin: 6px 0 20px; border: 1.5px solid var(--line); border-radius: 24px; }
 details.more summary {
   list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  min-height: 54px; padding: 0 18px; cursor: pointer; font-weight: 600; border-radius: 24px;
+  min-height: 62px; padding: 10px 22px; cursor: pointer; font-weight: 600; border-radius: 24px;
 }
 details.more summary::-webkit-details-marker { display: none; }
 details.more summary:hover { background: var(--field); }
 details.more summary:focus-visible { outline: 2px solid var(--sea); outline-offset: 1px; }
-details.more summary small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
+details.more summary small { display: block; margin-top: 2px; font-weight: 400; color: var(--muted); font-size: 14px; }
 details.more summary .chev { transition: transform .15s ease; color: var(--muted); }
 details.more[open] summary .chev { transform: rotate(180deg); }
-.more_body { padding: 0 18px 10px; }
+.more_body { padding: 4px 22px 18px; border-top: 1px solid var(--line); }
 .more_body .group_title:first-child { margin-top: 8px; }

@@ -3,10 +3,11 @@
   --bg: #F4F7FA;
   --surface: #FFFFFF;
   --field: #EEF3F7;
+  --field_border: #D3DEE6;
   --field_hover: #A8C1D2;
   --line: #E1E9EF;
   --text: #0F2533;
-  --muted: #4D6474;
+  --muted: #3F5565;
   --placeholder: #6F8796;
   --primary: #1B78B3;
   --primary_hover: #156597;
@@ -33,8 +34,8 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 button, input, select, textarea { font: inherit; color: inherit; }
@@ -51,7 +52,6 @@ svg.i {
 .skip_link { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 8px 14px; border-radius: 999px; background: var(--text); color: #fff; }
 .skip_link:focus { top: 12px; }
 
-@media (min-width: 600px) { body { font-size: 16px; } }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
