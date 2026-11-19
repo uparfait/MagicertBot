@@ -1,54 +1,50 @@
 # Getting a new certificate
 
-Getting a certificate happens in two parts, with a short pause in between
-while you add DNS records.
+## Step 1: Your website
 
-## Part one: start (`POST /api/certificate/start`)
+File: `client/parts/new_settings.html` and `client/js/new_form.js`
+
+- **Website addresses** (required): one row per address. Press Enter or
+  "Add another address" for a new row.
+- **Email address** (required unless "Sign up without email" is on):
+  Let's Encrypt uses it to reach you about your account.
+- **Key type**: ECDSA (faster) or RSA (works everywhere), with its
+  strength: P-256 or P-384, or 2048, 3072 or 4096 bits.
+- **More options**:
+  - Certificate name: the folder name inside your zip.
+  - Preferred chain: the root your certificate should link to, for
+    example `ISRG Root X1`. Empty means the default.
+  - Use the testing server: the Let's Encrypt practice server.
+  - Test run only: does every step on the practice server, but keeps no
+    certificate.
+  - Sign up without email.
+  - Company details: added to the signing request only.
+- **Terms** (required): you agree to the Let's Encrypt terms.
+
+Required fields have a mauve `*`. The page checks everything before
+moving on and puts the cursor on the first field that needs fixing.
+
+## Step 2: Prove it's yours
 
 File: `src/order_start.js`
 
-1. Make a new, short-lived **account key**. Let's Encrypt uses it to know
-   who is asking.
-2. Create a Let's Encrypt **account** with that key. The email is optional.
-3. Place an **order** for the domain names.
-4. For each domain, ask for the **DNS check** and work out the TXT record:
-   - Name: `_acme-challenge.` plus the domain
-   - Value: a short code made from the account key and the check
+The server makes a short-lived account key, creates a Let's Encrypt
+account, places an order and prepares both proofs for each address. You
+then pick a check file or a DNS record (see `proving_ownership.md`).
 
-The server sends back the records and a small **state** object: the
-account key, the account address and the order address. The browser keeps
-the state and sends it back in part two. This is how we avoid saving
-anything on the server.
-
-## The pause: adding records
-
-The page lists each record with copy buttons. Two domains such as
-`example.com` and `*.example.com` share one record name, so the page
-reminds you to add both values.
-
-## Part two: finish (`POST /api/certificate/finish`)
+## Step 3: Creating your certificate
 
 File: `src/order_finish.js`
 
-1. Check the state still points to Let's Encrypt (see `safety.md`).
-2. Look up the TXT records **ourselves first**. If a record is not there
-   yet, we stop and ask you to wait. The order stays open, so you can
-   simply press the button again later. If we let Let's Encrypt look too
-   early and it fails, the whole order would be closed.
-3. Ask Let's Encrypt to check the records, and wait until it agrees.
-4. Make the **private key** (RSA 2048 or ECDSA P-256) and a **signing
-   request** (CSR). See `src/signing_request.js`.
+1. Open the sealed order details and look up the order.
+2. Check each address the way you chose.
+3. Ask Let's Encrypt to confirm, and wait until it agrees.
+4. Make the private key and the signing request (`src/signing_request.js`).
 5. Send the signing request. Let's Encrypt signs the certificate.
-6. Download the certificate and pack every file into one ZIP.
+6. Pack every file into one zip (see `zip_files.md`).
 
-## Company details
+## Done
 
-The optional company name, country, state and city are added to the
-signing request. Let's Encrypt only prints domain names on the final
-certificate, so these details stay in `request.csr`.
-
-## Test mode
-
-Test mode uses the Let's Encrypt **staging** server. It works the same way
-but has much higher limits, so it is safe for practice. Browsers do not
-trust its certificates, and the ZIP name ends with `_test`.
+The page shows how many days the certificate has left, a short summary,
+the files in the zip, and every detail of the certificate. **Download
+zip** saves it, and **Make another** starts again with your settings.

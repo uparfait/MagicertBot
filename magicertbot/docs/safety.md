@@ -2,49 +2,55 @@
 
 ## Nothing is stored
 
-The server has no database and writes no files. Keys and certificates live
-in memory only while a request runs. After the answer is sent, they are
-gone.
+There is no database and no file is written. Keys and certificates live
+in memory only while a request runs.
 
-## The order state is checked
+## Encrypted and sealed
 
-Between part one and part two, the browser holds the order state (the
-account key and two Let's Encrypt addresses). Because it comes back from
-the browser, the server checks that both addresses still point to the
-Let's Encrypt server. If anything else is there, the request is refused.
-See `check_state` in `src/acme_setup.js`.
+Every request and answer is encrypted with a fresh key, and the order
+details are sealed so the browser cannot read or change them. See
+`secure_requests.md`.
+
+## The order stays with Let's Encrypt
+
+Even after the seal is opened, the server checks that the account and
+order addresses point to the Let's Encrypt server and nowhere else. See
+`check_state` in `src/acme_setup.js`.
+
+## Check files
+
+- The pasted address must be on the same domain that was entered before.
+  This is checked in the browser and again on the server.
+- The server opens the file itself on plain http, the same way Let's
+  Encrypt does, and checks every redirect along the way.
+
+## Only public websites
+
+The check file test and the live website check only connect to public
+addresses. Local and private ones (like `127.0.0.1` or `192.168.x.x`) are
+refused, so the tool cannot be used to look inside private networks. See
+`src/net_safety.js`. Connections stop after 8 seconds.
 
 ## Private keys
 
 - New keys are made on the server with Node's built-in crypto tools.
-- An uploaded key is only used to sign the request. It is checked against
-  the certificate first, so a wrong key is caught early.
-- The ZIP reminds you to keep `privkey.pem` secret.
+- A key from your zip is only used when you turn on "Keep the same private
+  key", and only after it is checked against the certificate.
 
 ## Limits on uploads
 
-- The browser only sends `.zip` files under 2 MB.
+- The page only sends `.zip` files under 2 MB.
 - The server accepts requests up to 4 MB.
-- Inside a ZIP, more than 30 files is refused and files over 256 KB are
-  skipped. This protects the server from very large or tricky ZIPs.
-
-## Checking websites
-
-The live website check only connects to public addresses. Local and
-private addresses (like `127.0.0.1` or `192.168.x.x`) are refused, so the
-tool cannot be used to look inside private networks. The connection is
-made to the exact address we checked, and it stops after 8 seconds.
+- Inside a zip, more than 30 files is refused and files over 256 KB are
+  skipped.
 
 ## Input checks
 
-- Domain names must look like real domains. Up to 100 per certificate.
+- Addresses must look like real domains. Up to 100 per certificate.
 - Emails must look like real emails.
+- The certificate name may only use letters, numbers, dots, dashes and
+  underscores.
 - The country code must be two letters.
 
-Every problem comes back as a clear, friendly message. Unknown errors are
-written to the server log and shown to the person as a short, calm note.
-
-## Headers
-
-The server hides the `X-Powered-By` header and sends
-`X-Content-Type-Options: nosniff` and a strict referrer policy.
+Every problem comes back as a clear, friendly message. Unknown errors go
+to the server log, and the person sees a short, calm note.

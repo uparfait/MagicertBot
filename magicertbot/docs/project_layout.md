@@ -2,53 +2,45 @@
 
 ```
 magicertbot/
-├── api/index.js             Vercel starts here and hands over to Express
-├── server.js                Starts the app on your own computer
-├── vercel.json              Vercel settings
-├── package.json             Packages and scripts
-├── src/                     Server code
-│   ├── app.js               Express setup, routes and the catch-all page
-│   ├── page.js              Joins the page parts and fills in each tab
-│   ├── seo_routes.js        robots.txt and sitemap.xml
-│   ├── stream.js            Sends progress updates line by line
-│   ├── errors.js            Turns errors into plain, friendly words
-│   ├── validate.js          Checks domains, emails and website addresses
-│   ├── acme_setup.js        Connects to Let's Encrypt, checks the state
-│   ├── order_start.js       Part one: account, order and DNS records
-│   ├── order_finish.js      Part two: check, sign, download and pack
-│   ├── signing_request.js   Makes the private key and signing request
-│   ├── zip_writer.js        Packs the certificate files into a ZIP
-│   ├── zip_reader.js        Finds the certificate and key in a ZIP
-│   ├── cert_details.js      Reads every detail from a certificate
-│   ├── site_certificate.js  Reads the certificate of a live website
-│   └── routes/
-│       ├── certificate_routes.js   start, renew and finish
-│       └── check_routes.js         check a ZIP or a website
-├── client/                  Everything the browser loads
-│   ├── parts/               The page, split into small HTML parts
-│   ├── css/                 base, layout, tabs, forms, buttons,
-│   │                        progress and results styles
-│   ├── js/                  Browser code (see below)
-│   ├── images/icon.svg      Logo and favicon
-│   └── site.webmanifest     App name, colours and icon
-└── docs/                    These guides
+├── api/index.js          Vercel starts here and hands over to Express
+├── server.js             Starts the app on your own computer
+├── scripts/make_key.js   Makes the handshake key
+├── vercel.json           Vercel settings
+├── src/                  Server code
+│   ├── app.js, page.js, seo_routes.js   The app, the page, SEO files
+│   ├── payload.js, handshake.js         Encrypted requests
+│   ├── sealed_state.js                  Sealed order details
+│   ├── stream.js, errors.js             Progress lines, friendly errors
+│   ├── validate.js, net_safety.js       Input checks, public addresses
+│   ├── acme_setup.js                    Talks to Let's Encrypt
+│   ├── order_start.js, order_finish.js  The two parts of an order
+│   ├── proof_check.js, proof_http.js    DNS record and check file tests
+│   ├── signing_request.js               Private key and CSR
+│   ├── zip_writer.js, readme_writer.js  The zip you download
+│   ├── zip_reader.js, cert_report.js    Reading and reporting on a zip
+│   ├── cert_details.js, cert_names.js   Reading a certificate
+│   ├── site_certificate.js              Reading a live website
+│   └── routes/                          certificate and check routes
+├── client/
+│   ├── parts/            The page in small HTML parts
+│   ├── css/              base, layout, fields, controls, switches,
+│   │                     buttons, loader, results and proof styles
+│   ├── js/               Browser code (see below)
+│   └── images/icon.svg   Logo and favicon
+└── docs/                 These guides
 ```
 
 ## Browser code (`client/js/`)
 
-| File | What it does |
+| Group | Files |
 | --- | --- |
-| `main.js` | Starts every part of the page |
-| `tabs.js` | The three tabs and their addresses |
-| `dom.js` | Small helpers to build elements, copy and download |
-| `files.js` | Drop zones and reading ZIP files |
-| `request.js` | Sends requests and reads progress lines |
-| `progress.js` | The gear, percent and bar |
-| `run_task.js` | Runs a request with progress and locks the form |
-| `order_flow.js` | The two parts of getting a certificate |
-| `dns_records.js` | Shows the TXT records with copy buttons |
-| `certificate_result.js` | Shows the finished certificate and downloads it |
-| `new_certificate.js` | The New certificate form |
-| `renew_certificate.js` | The Renew form |
-| `check_certificate.js` | The two Check forms |
-| `details_view.js` | Shows certificate details |
+| Start and shared | `main.js`, `helpers.js`, `icons.js`, `views.js`, `tabs.js` |
+| Requests | `secure_channel.js`, `request.js`, `run_task.js` |
+| Gear loader | `loader.js`, `loader_steps.js` |
+| Form parts | `select.js`, `form_tools.js`, `domain_rows.js` |
+| New certificate | `new_state.js`, `new_choices.js`, `new_controls.js`, `new_form.js`, `new_checks.js`, `new_submit.js`, `new_done.js` |
+| Proving ownership | `order_flow.js`, `proof_view.js`, `proof_cards.js`, `proof_collect.js` |
+| Upload | `upload.js`, `drop_markup.js` |
+| Renew | `renew.js`, `renew_run.js`, `renew_done.js` |
+| Check | `check.js`, `check_report.js`, `check_plain.js`, `site_report.js` |
+| Results | `results.js` |

@@ -1,7 +1,7 @@
 # Design
 
-The look is calm and simple: plenty of white space, one clear action per
-card, and short, friendly text.
+Calm, simple and friendly: round shapes, soft blues, plenty of space, and
+one clear action at a time.
 
 ## Colours
 
@@ -9,51 +9,47 @@ All colours live in `client/css/base.css` as CSS variables.
 
 | Name | Colour | Used for |
 | --- | --- | --- |
-| Primary, sky blue | `#4a9fd8` | Buttons, the progress bar, hover borders |
-| Secondary, sea blue | `#0b5a8c` | Links, focus borders, button hover |
-| Ink | `#0d2433` | Headings and button text |
-| Muted | `#5c6d79` | Hints and notes |
+| Primary | `#1B78B3` | Buttons, the open tab, switches |
+| Sky | `#4FA9DD` | The gear and the start of the bar |
+| Sea | `#0C5A8A` | Links, focus borders, big numbers |
+| Background | `#F4F7FA` | The page behind the white panel |
+| Field | `#EEF3F7` | The inside of every field |
+| Mauve | `#8E5B8A` | The `*` on required fields |
 
-Button text is dark ink on sky blue, and white on sea blue when hovered.
-Both pairs are easy to read and pass the WCAG AA contrast level.
+White text on the primary blue is easy to read and passes the WCAG AA
+level.
 
-## Phone first
+## Fonts
 
-The CSS is written for small screens first. Wider screens get extra rules
-inside `@media (min-width: 640px)`:
+**Plus Jakarta Sans** for text and **JetBrains Mono** for codes, both from
+Google Fonts. If they cannot load, the system font is used.
 
-- cards get more padding
-- the two Check forms sit side by side
-- buttons shrink to their natural width
-- the detail rows put the label beside the value
+## Fields
 
-The page keeps a 16px gap at each side and never scrolls sideways.
+Files: `client/css/fields.css`, `client/css/controls.css`
 
-## Form fields
+- Fields are round pills with an icon on the left.
+- They have no shadow and no glow ring. Only the border changes: light
+  blue on hover, sea blue on focus.
+- Dropdowns are custom lists that match the fields and work with the
+  arrow keys, Enter and Escape.
+- Choices with two options are a sliding pill (a segmented control).
+- Yes or no options are switches.
 
-File: `client/css/forms.css`
+## Required fields
 
-- Fields have no shadow and no glow ring.
-- Only the border colour changes: sky blue when you hover, sea blue when
-  the field is in focus.
-- The font size is 16px, so phones do not zoom in when you tap a field.
-- Every field has a real `<label>`, and hints are linked with
-  `aria-describedby`, so screen readers read them too.
+Required fields show a mauve `*` after their label, and a short note
+explains it. The input also has `aria-required="true"`.
 
-ZIP pickers are big drop zones. You can click them or drag a file onto
-them. Once a file is chosen, the zone shows its name.
+## Every screen looks the same
+
+The page is built for screens 600px wide and more. On a smaller screen, a
+tiny script in `head.html` tells the browser to draw the page at 600px
+and scale it down to fit. So a phone shows exactly the same layout as a
+computer, only smaller. People can still pinch to zoom.
 
 ## Writing style
 
-The text speaks to people like a helpful friend:
-
-- "I've added them, check now" instead of "Continue"
-- "We can't see the TXT record yet. Please wait a little and check again."
-  instead of an error code
-
-## Small touches
-
-- A "Skip to main content" link for keyboard users.
-- Clear focus outlines on buttons and tabs when using a keyboard.
-- Less motion for people who ask their device for it.
-- System fonts, so there is nothing extra to download.
+The text speaks like a helpful friend, with short sentences and simple
+words: "Prove it's yours", "We can't see the DNS record yet. Please wait
+a little and try again."

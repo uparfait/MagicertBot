@@ -1,60 +1,58 @@
-# Progress in percent
+# The gear, the percent and the steps
 
-Every action shows a box with a turning gear, a note about the current
-step, a percent number and a bar that fills up.
+While work runs, the page shows a turning gear, a big percent, a short
+note, a bar that fills up and the list of steps.
 
-## On the server: one line per update
+## On the server: a plan, then progress
 
 File: `src/stream.js`
 
-Instead of waiting until the end, the server answers right away and keeps
-the answer open. Every time it reaches a new step, it writes one line of
-JSON:
+The server answers right away and keeps the answer open. It writes one
+line of JSON for each update (this is called NDJSON):
 
 ```json
-{"type":"progress","percent":55,"text":"Placing your certificate order"}
-```
-
-The last line holds the result or an error:
-
-```json
+{"type":"plan","steps":["Getting ready","Creating your Let's Encrypt account"]}
+{"type":"progress","index":1,"percent":25,"text":"Creating your Let's Encrypt account"}
 {"type":"done","data":{ ... }}
-{"type":"error","message":"We can't see the TXT record yet ..."}
 ```
 
-This format is called **NDJSON** (one JSON object per line). The helper
-`stream_route` wraps every route, so each one gets the same updates and errors.
+The **plan** lists every step first, so the page can show what comes
+next. Each **progress** line marks the step running now. The last line
+is either **done** with the result or **error** with a plain message.
+
+Each line is encrypted before it is sent (see `secure_requests.md`).
 
 ## In the browser: reading lines as they arrive
 
 File: `client/js/request.js`
 
-We use `XMLHttpRequest` instead of `fetch` because it can report both:
+`XMLHttpRequest` reports both the upload (`xhr.upload.onprogress`) and
+each piece of the answer as it arrives (`xhr.onprogress`). Every full
+line is opened and handled in order.
 
-- **upload progress** through `xhr.upload.onprogress`
-- **answer progress** through `xhr.onprogress`, which fires each time new
-  text arrives
+## Turning it into a percent
 
-Each time new text arrives, we read every new full line.
+File: `client/js/loader.js`
 
-## Turning two parts into one percent
+- When a zip is uploaded, the first 20% follows the real upload.
+- The rest follows the server's steps: with 4 steps, each one is 25%.
+- Inside a long step the bar creeps forward slowly, so it never looks
+  stuck, but it never passes the end of the step.
+- The number never goes backwards.
 
-When a ZIP is uploaded, the bar is shared:
+## The step list
 
-- the first 25% follows the upload
-- the last 75% follows the server's own percent
+File: `client/js/loader_steps.js`
 
-When nothing is uploaded, the server's percent fills the whole bar. The
-bar never moves backwards, so it always feels like steady progress.
+- a grey dot for steps still to come
+- a small turning gear for the step running now
+- a green tick for finished steps
 
 ## The gear
 
-File: `client/js/progress.js` and `client/css/progress.css`
+The gear is an SVG turned by a CSS animation. If something goes wrong it
+stops and turns red, and the note shows the reason. People who ask their
+device for less motion see a much slower turn.
 
-The gear is a small SVG: a dashed ring makes the teeth, and a solid circle
-makes the middle. A CSS animation turns it while work is running. It turns
-green when the work is done and red if something goes wrong. People who ask
-their device for less motion see a much slower turn.
-
-The note text sits in an `aria-live` area, so screen readers read each new
+The note sits in a `role="status"` area, so screen readers read each new
 step out loud.

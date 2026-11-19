@@ -11,37 +11,29 @@ place. Search engines do not need to run any JavaScript to read it.
 
 File: `src/page.js`
 
-Each tab has its own address, title and description:
-
 | Address | Title |
 | --- | --- |
-| `/` | Free SSL certificates in minutes |
-| `/renew` | Renew your SSL certificate |
-| `/check` | Check an SSL certificate |
+| `/` | Free SSL Certificates Made Simple from MagicertBot |
+| `/renew` | Renew your SSL certificate from MagicertBot |
+| `/check` | Check an SSL certificate from MagicertBot |
 
-Each description is written for people and says what the page does.
+Each description says in plain words what that tab does.
 
-## Canonical link
+## Other tags in the head
 
-`<link rel="canonical">` tells search engines the main address of each
-page. It is built from the real host of the request, so it works on any
-domain without changes.
-
-## Sharing previews
-
-Open Graph tags (`og:title`, `og:description`, `og:url`) and Twitter card
-tags control how a link looks when shared in chat apps and social media.
-
-## Structured data
-
-A small JSON-LD block tells search engines this is a free
-`WebApplication` in the security category.
+- `<link rel="canonical">`: the main address of each tab, built from the
+  real host of the request, so it works on any domain.
+- `keywords`, `author` and `robots` tags.
+- Open Graph and Twitter tags, which shape how a shared link looks.
+- `theme-color`, so phone browsers match the brand blue.
+- A small JSON-LD block that tells search engines this is a free
+  `WebApplication` in the security category.
 
 ## robots.txt and sitemap.xml
 
 File: `src/seo_routes.js`
 
-- `/robots.txt` lets search engines read every page but not `/api/`, and
+- `/robots.txt` lets search engines read every page except `/api/`, and
   points to the sitemap.
 - `/sitemap.xml` lists the three tab addresses.
 
@@ -50,11 +42,12 @@ Both are built per request, so they always show the right domain.
 ## Clean, meaningful HTML
 
 - `lang="en"` on the page
-- one `<h1>`, then `<h2>` for each tab and `<h3>` inside cards
+- one `<h1>`, then `<h2>` for each step and `<h3>` for parts of a result
 - `<header>`, `<nav>`, `<main>` and `<footer>` around the right parts
 - tabs are real links that search engines can follow
 
 ## Speed
 
-Fast pages rank better. The page uses system fonts, small CSS files, no
-large libraries in the browser, and files are cached for one hour.
+Fast pages rank better. The page has no large libraries, the files are
+small, the fonts load with `display=swap`, and files are cached for one
+hour.
