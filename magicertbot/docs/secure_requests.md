@@ -6,7 +6,7 @@ using the page never see any of this.
 
 ## The handshake
 
-Files: `src/handshake.js`, `src/payload.js`, `client/js/secure_channel.js`
+Files: `src/handshake.js`, `src/payload.js`, `public/js/secure_channel.js`
 
 1. The server has one private key (ECDH on the P-256 curve). The browser
    asks for its public half once, from `GET /api/handshake`.

@@ -26,7 +26,7 @@ The browser turns it back into bytes and saves it when you press
 
 ## Sending a zip to the server
 
-File: `client/js/upload.js`
+File: `public/js/upload.js`
 
 1. The page checks the name ends with `.zip` and that it is under 2 MB.
 2. `FileReader` reads it as base64 text.

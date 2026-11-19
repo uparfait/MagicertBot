@@ -5,7 +5,7 @@ address. On the "Prove it's yours" step you pick one of two ways.
 
 ## Check file
 
-Files: `client/js/proof_view.js`, `client/js/proof_collect.js`,
+Files: `public/js/proof_view.js`, `public/js/proof_collect.js`,
 `src/proof_http.js`
 
 1. Let's Encrypt gives each address a **unique ID** (called a token).
@@ -34,7 +34,7 @@ always use a DNS record.
 
 ## DNS record
 
-Files: `client/js/proof_cards.js`, `src/proof_check.js`
+Files: `public/js/proof_cards.js`, `src/proof_check.js`
 
 1. The page shows a TXT record: the name `_acme-challenge.your-address`
    and a value made from your account key.

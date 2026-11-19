@@ -10,7 +10,7 @@ const { setup_crash_guard } = require("./crash_guard");
 setup_crash_guard();
 
 const app = express();
-const client_folder = path.join(__dirname, "..", "client");
+const public_folder = path.join(__dirname, "..", "public");
 // Each tab has its own address. Every other address is sent to the
 // create page. The page is never cached, so it always points to the newest files.
 const go_home = (req, res) => res.redirect(301, home_path);
@@ -33,8 +33,8 @@ app.use((req, res, next) => {
 app.use("/parts", go_home);
 // Styles and scripts live under a fingerprinted address, so they can be
 // kept for a long time: a changed file always gets a new address.
-app.use("/assets/:version", express.static(client_folder, { index: false, maxAge: "365d", immutable: true }));
-app.use(express.static(client_folder, { index: false, maxAge: 0 }));
+app.use("/assets/:version", express.static(public_folder, { index: false, maxAge: "365d", immutable: true }));
+app.use(express.static(public_folder, { index: false, maxAge: 0 }));
 app.use(seo_routes);
 // Every API request goes through the encrypted handshake first.
 app.use("/api", payload);

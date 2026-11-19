@@ -2,7 +2,7 @@
 
 ## Renewing
 
-Files: `client/js/renew.js`, `client/js/renew_run.js`
+Files: `public/js/renew.js`, `public/js/renew_run.js`
 
 **Step 1: Upload.** Drop the zip on the upload area. While it uploads you
 see a gear and the upload percent. The server reads the zip and the page
@@ -29,7 +29,7 @@ the same type and strength as your old one. The zip is named
 
 ## Checking a zip
 
-Files: `src/cert_report.js`, `client/js/check_report.js`
+Files: `src/cert_report.js`, `public/js/check_report.js`
 
 Node.js has a built-in `X509Certificate` class that reads certificates.
 The report shows:
@@ -45,7 +45,7 @@ The report shows:
 
 ## Checking a live website
 
-Files: `src/site_certificate.js`, `client/js/site_report.js`
+Files: `src/site_certificate.js`, `public/js/site_report.js`
 
 1. Clean the address, so `https://example.com/page` becomes `example.com`.
 2. Look up its IP address and refuse private or local addresses.

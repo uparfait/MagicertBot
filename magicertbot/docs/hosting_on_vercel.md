@@ -5,10 +5,13 @@
 Files: `vercel.json`, `api/index.js`
 
 - `api/index.js` hands every request to the Express app in `src/app.js`.
-- The `rewrites` rule sends every address to that function, so Express
-  decides what to answer: a file, an API reply or the page.
-- `includeFiles` packs the `client/` folder (styles, scripts, images and
-  page parts) together with the function.
+- `outputDirectory` is `public`: Vercel sends those files (styles,
+  scripts and images) exactly as they are. Nothing else is public.
+- `/assets/<fingerprint>/...` addresses are mapped to those files and kept
+  by browsers for a year.
+- Every other address goes to the function, so Express decides what to
+  answer: an API reply, one of the three pages, or a redirect.
+- `includeFiles` packs `views/` (page parts) and `public/` with the function.
 - `maxDuration` gives each request up to 60 seconds. Waiting for Let's
   Encrypt to confirm can take a little while.
 

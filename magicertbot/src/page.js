@@ -2,7 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const { asset_version } = require("./asset_version");
 
-const parts_folder = path.join(__dirname, "..", "client", "parts");
+// The page parts live outside the public folder, so they are never sent on their own.
+const parts_folder = path.join(__dirname, "..", "views");
 const part_names = ["head", "header", "new_settings", "new_options", "new_finish", "renew", "check", "footer"];
 
 // The page is split into small parts. We join them once when the app starts.

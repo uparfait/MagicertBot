@@ -9,7 +9,7 @@ Each tab has its own address: `/create-new-certificate`,
 that is not a file or an API route, including `/`, is sent to
 `/create-new-certificate` with a permanent (301) redirect.
 
-The page is kept in small parts inside `client/parts/`:
+The page is kept in small parts inside `views/`:
 
 `head.html`, `header.html`, `new_settings.html`, `new_options.html`,
 `new_finish.html`, `renew.html`, `check.html` and `footer.html`
@@ -26,7 +26,7 @@ safe for HTML before it goes in.
 
 ## Tabs that everyone can use
 
-File: `client/js/tabs.js`
+File: `public/js/tabs.js`
 
 - The row has `role="tablist"`, each tab has `role="tab"`, and each panel
   has `role="tabpanel"`.
@@ -41,7 +41,7 @@ Between the tabs sits a short line with "Or" in its middle.
 
 ## Views inside a tab
 
-File: `client/js/views.js`
+File: `public/js/views.js`
 
 Each tab has a few views, like `form`, `prove`, `work` and `done`. Only
 one shows at a time. A small chip says "Step 1 of 3", and a **Back**

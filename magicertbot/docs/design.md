@@ -4,7 +4,7 @@ Calm and friendly: round shapes, soft blues and one clear action at a time.
 
 ## Colours
 
-All colours live in `client/css/base.css` as CSS variables.
+All colours live in `public/css/base.css` as CSS variables.
 
 | Name | Colour | Used for |
 | --- | --- | --- |
@@ -25,14 +25,14 @@ inputs and results can be selected (`select.css`), in white on blue.
 
 ## Fields
 
-Files: `client/css/fields.css`, `client/css/controls.css`
+Files: `public/css/fields.css`, `public/css/controls.css`
 
 - Each field reads top to bottom: label, hint, the field, then any error.
-- Related fields sit together in a softly tinted box (`client/css/groups.css`).
+- Related fields sit together in a softly tinted box (`public/css/groups.css`).
 - Fields are round pills with an icon, and every one has a placeholder.
 - A soft border at rest, and no shadow or glow ring. Only the border
   colour changes: light blue on hover, sea blue on focus.
-- Autofill never changes a field's colours (see `client/css/autofill.css`).
+- Autofill never changes a field's colours (see `public/css/autofill.css`).
 - Dropdowns are custom lists that match the fields and work with the
   arrow keys, Enter and Escape.
 - Choices with two options are a sliding pill (a segmented control).
@@ -51,7 +51,7 @@ On screens under 600px, a tiny script in `head.html` draws the page at
 ## Accessibility menu
 
 An accessibility button sits at the bottom right of every page: a white
-background with the light page colour `#F4F7FA`. See `client/parts/footer.html`.
+background with the light page colour `#F4F7FA`. See `views/footer.html`.
 
 ## Writing style
 

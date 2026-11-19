@@ -21,8 +21,8 @@ magicertbot/
 │   ├── cert_details.js, cert_names.js   Reading a certificate
 │   ├── site_certificate.js              Reading a live website
 │   └── routes/                          certificate and check routes
-├── client/
-│   ├── parts/            The page in small HTML parts
+├── views/                The page in small HTML parts (server only)
+├── public/               Everything the browser loads
 │   ├── css/              base, layout, fields, controls, switches,
 │   │                     buttons, loader, results and proof styles
 │   ├── js/               Browser code (see below)
@@ -30,7 +30,7 @@ magicertbot/
 └── docs/                 These guides
 ```
 
-## Browser code (`client/js/`)
+## Browser code (`public/js/`)
 
 | Group | Files |
 | --- | --- |

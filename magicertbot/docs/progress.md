@@ -26,7 +26,7 @@ On the wire every line is encrypted and looks like
 
 ## In the browser
 
-Files: `client/js/request.js`, `client/js/loader.js`
+Files: `public/js/request.js`, `public/js/loader.js`
 
 `XMLHttpRequest` reports both the upload and each piece of the answer as
 it arrives. Every full line is opened and handled in order.
@@ -37,13 +37,13 @@ it arrives. Every full line is opened and handled in order.
   stuck, but it never passes the end of the step.
 - The number never goes backwards.
 
-The step list (`client/js/loader_steps.js`) shows a grey dot for steps
+The step list (`public/js/loader_steps.js`) shows a grey dot for steps
 still to come, a small turning gear for the step running now and a green
 tick for finished steps.
 
 ## When something goes wrong
 
-File: `client/js/run_task.js`
+File: `public/js/run_task.js`
 
 The gear stops and turns red, the step that failed gets a red alert sign,
 and the note shows the real reason, like Let's Encrypt refusing an

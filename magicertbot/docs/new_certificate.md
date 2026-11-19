@@ -2,7 +2,7 @@
 
 ## Step 1: Your website
 
-File: `client/parts/new_settings.html` and `client/js/new_form.js`
+File: `views/new_settings.html` and `public/js/new_form.js`
 
 - **Website addresses** (required): one row per address. Press Enter or
   "Add another address" for a new row. The same address can only be
