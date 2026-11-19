@@ -1,0 +1,38 @@
+<body>
+<a class="skip_link" href="#main_content">Skip to main content</a>
+
+<header class="site_header">
+  <div class="container header_inner">
+    <a class="brand" href="/">
+      <img src="/images/icon.svg" alt="" width="28" height="28">
+      <span>MagiCertbot</span>
+    </a>
+  </div>
+</header>
+
+<main id="main_content" class="container">
+  <section class="intro" aria-labelledby="page_title">
+    <h1 id="page_title">Free SSL certificates, made simple</h1>
+    <p>
+      Get a new certificate, renew the one you have, or check any certificate.
+      Everything comes from Let's Encrypt, and we never keep your files.
+    </p>
+  </section>
+
+  <noscript>
+    <p class="notice">This tool needs JavaScript turned on to talk to Let's Encrypt.</p>
+  </noscript>
+
+  <nav aria-label="Certificate tools">
+    <div class="tab_list" role="tablist">
+      <a class="tab" role="tab" id="tab_new" href="/" aria-controls="panel_new"
+         aria-selected="{{new_selected}}" tabindex="{{new_tabindex}}"
+         data-title="{{new_title}}">New certificate</a>
+      <a class="tab" role="tab" id="tab_renew" href="/renew" aria-controls="panel_renew"
+         aria-selected="{{renew_selected}}" tabindex="{{renew_tabindex}}"
+         data-title="{{renew_title}}">Renew</a>
+      <a class="tab" role="tab" id="tab_check" href="/check" aria-controls="panel_check"
+         aria-selected="{{check_selected}}" tabindex="{{check_tabindex}}"
+         data-title="{{check_title}}">Check</a>
+    </div>
+  </nav>

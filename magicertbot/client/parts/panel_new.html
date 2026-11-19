@@ -1,0 +1,56 @@
+<section class="tab_panel" id="panel_new" role="tabpanel" aria-labelledby="tab_new" {{new_hidden}}>
+  <div class="panel_intro">
+    <h2>Get a new certificate</h2>
+    <p>Tell us your domain. We give you a DNS record to add, and then your certificate is ready to download.</p>
+  </div>
+
+  <ol class="steps" data-steps>
+    <li aria-current="step">Your details</li>
+    <li>Prove it's yours</li>
+    <li>Download</li>
+  </ol>
+
+  <form class="card form" id="new_form" novalidate>
+    <div class="field">
+      <label for="new_domains">Domain names</label>
+      <input id="new_domains" name="domains" type="text" inputmode="url" autocomplete="off"
+             spellcheck="false" placeholder="example.com, www.example.com" aria-describedby="new_domains_hint">
+      <p class="hint" id="new_domains_hint">Separate them with commas. Use *.example.com to cover every subdomain.</p>
+    </div>
+
+    <div class="field">
+      <label for="new_email">Email <span class="optional">(optional)</span></label>
+      <input id="new_email" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="new_email_hint">
+      <p class="hint" id="new_email_hint">Let's Encrypt only uses it to reach you about your account.</p>
+    </div>
+
+    <div class="field">
+      <label for="new_key_type">Key type</label>
+      <select id="new_key_type" name="key_type">
+        <option value="rsa">RSA 2048: works with almost everything</option>
+        <option value="ecdsa">ECDSA P-256: smaller and faster</option>
+      </select>
+    </div>
+
+    <details class="more_details">
+      <summary>Add company details (optional)</summary>
+      <div class="field_grid">
+        <div class="field"><label for="new_organization">Company name</label><input id="new_organization" name="organization" type="text" autocomplete="organization"></div>
+        <div class="field"><label for="new_country">Country code</label><input id="new_country" name="country" type="text" maxlength="2" placeholder="US" autocomplete="country"></div>
+        <div class="field"><label for="new_state">State or province</label><input id="new_state" name="state" type="text" autocomplete="address-level1"></div>
+        <div class="field"><label for="new_city">City</label><input id="new_city" name="city" type="text" autocomplete="address-level2"></div>
+      </div>
+      <p class="hint">These go into the signing request. Let's Encrypt only prints domain names on the certificate.</p>
+    </details>
+
+    <label class="check_row">
+      <input type="checkbox" name="staging">
+      <span>Test mode<small>Uses the Let's Encrypt practice server. Great for trying things out, but browsers will not trust the certificate.</small></span>
+    </label>
+
+    <p class="form_error" role="alert" hidden></p>
+    <button class="button" type="submit">Get my certificate</button>
+  </form>
+
+  <div class="work_area" data-work_area></div>
+</section>

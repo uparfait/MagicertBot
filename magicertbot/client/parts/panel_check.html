@@ -1,0 +1,38 @@
+<section class="tab_panel" id="panel_check" role="tabpanel" aria-labelledby="tab_check" {{check_hidden}}>
+  <div class="panel_intro">
+    <h2>Check a certificate</h2>
+    <p>See which domains a certificate covers, who issued it and how many days it has left.</p>
+  </div>
+
+  <div class="check_grid">
+    <form class="card form" id="check_file_form" novalidate>
+      <h3>From a ZIP file</h3>
+      <div class="field">
+        <span class="label" id="check_zip_label">Certificate ZIP file</span>
+        <label class="drop_zone" data-drop_zone>
+          <input class="visually_hidden" type="file" name="zip_file" accept=".zip,application/zip"
+                 aria-labelledby="check_zip_label" aria-describedby="check_zip_hint">
+          <span class="drop_title">Choose a ZIP file or drop it here</span>
+          <span class="drop_hint">With your certificate inside, like fullchain.pem</span>
+        </label>
+        <p class="hint" id="check_zip_hint">If your private key is in the ZIP too, we also tell you if the two belong together.</p>
+      </div>
+      <p class="form_error" role="alert" hidden></p>
+      <button class="button" type="submit">Check file</button>
+    </form>
+
+    <form class="card form" id="check_domain_form" novalidate>
+      <h3>From a live website</h3>
+      <div class="field">
+        <label for="check_domain">Website address</label>
+        <input id="check_domain" name="domain" type="text" inputmode="url" autocomplete="url"
+               spellcheck="false" placeholder="example.com" aria-describedby="check_domain_hint">
+        <p class="hint" id="check_domain_hint">We connect to it like a browser would and read its certificate.</p>
+      </div>
+      <p class="form_error" role="alert" hidden></p>
+      <button class="button" type="submit">Check website</button>
+    </form>
+  </div>
+
+  <div class="work_area" data-work_area></div>
+</section>
