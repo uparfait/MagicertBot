@@ -50,8 +50,8 @@ computer, only smaller. People can still pinch to zoom.
 
 ## Accessibility menu
 
-An accessibility button sits at the bottom right of every page, in the
-primary blue and page background. See `client/parts/footer.html`.
+An accessibility button sits at the bottom right of every page: a primary
+blue background with a light icon. See `client/parts/footer.html`.
 
 ## Writing style
 
