@@ -37,21 +37,21 @@ Let's Encrypt practice server, so you will not hit their limits.
 
 ## Put it online with Vercel
 
-See [docs/hosting_on_vercel.md](docs/hosting_on_vercel.md).
+See [docs/hosting_on_vercel.md](magicertbot/docs/hosting_on_vercel.md).
 
 ## Guides
 
 | Guide | What it explains |
 | --- | --- |
-| [how_it_works.md](docs/how_it_works.md) | The big picture |
-| [proving_ownership.md](docs/proving_ownership.md) | Check file or DNS record |
-| [new_certificate.md](docs/new_certificate.md) | Each step of a new certificate |
-| [renew_and_check.md](docs/renew_and_check.md) | Renewing and checking |
-| [zip_files.md](docs/zip_files.md) | What goes in and out of the zip |
-| [secure_requests.md](docs/secure_requests.md) | The key handshake and encryption |
-| [progress.md](docs/progress.md) | The gear, the percent and the steps |
-| [page_and_tabs.md](docs/page_and_tabs.md) | One page, three tabs, every address |
-| [design.md](docs/design.md) | Colours, fields and screen sizes |
-| [seo.md](docs/seo.md) | Helping search engines find the site |
-| [safety.md](docs/safety.md) | Limits and checks that keep it safe |
-| [project_layout.md](docs/project_layout.md) | What each file does |
+| [how_it_works.md](magicertbot/docs/how_it_works.md) | The big picture |
+| [proving_ownership.md](magicertbot/docs/proving_ownership.md) | Check file or DNS record |
+| [new_certificate.md](magicertbot/docs/new_certificate.md) | Each step of a new certificate |
+| [renew_and_check.md](magicertbot/docs/renew_and_check.md) | Renewing and checking |
+| [zip_files.md](magicertbot/docs/zip_files.md) | What goes in and out of the zip |
+| [secure_requests.md](magicertbot/docs/secure_requests.md) | The key handshake and encryption |
+| [progress.md](magicertbot/docs/progress.md) | The gear, the percent and the steps |
+| [page_and_tabs.md](magicertbot/docs/page_and_tabs.md) | One page, three tabs, every address |
+| [design.md](magicertbot/docs/design.md) | Colours, fields and screen sizes |
+| [seo.md](magicertbot/docs/seo.md) | Helping search engines find the site |
+| [safety.md](magicertbot/docs/safety.md) | Limits and checks that keep it safe |
+| [project_layout.md](magicertbot/docs/project_layout.md) | What each file does |
