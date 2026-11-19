@@ -1,0 +1,32 @@
+/* When the browser fills a field for you (autofill), the field must look
+   exactly the same as when you type: same background, text and font.
+   Browsers paint their own yellow or blue background on autofilled
+   fields, so we cover it with an inside fill in the field's own colour. */
+.input input:-webkit-autofill,
+.input input:-webkit-autofill:hover,
+.input input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--field) inset !important;
+  box-shadow: 0 0 0 1000px var(--field) inset !important;
+  background-color: var(--field) !important;
+  caret-color: var(--text);
+  font-family: var(--font);
+  /* The browser's own colour would fade in, so we make that take ages. */
+  transition: background-color 600000s 0s, color 600000s 0s, border-color .15s ease;
+}
+
+/* In focus, the field is white, autofilled or not. */
+.input input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text) !important;
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+  box-shadow: 0 0 0 1000px #fff inset !important;
+  background-color: #fff !important;
+}
+
+/* The same rules for browsers that use the standard :autofill name. */
+.input input:autofill { background-color: var(--field) !important; }
+.input input:autofill:focus { background-color: #fff !important; }
+
+/* The first line of a filled field keeps our font, not the browser's. */
+.input input:-webkit-autofill::first-line { font-family: var(--font); font-size: inherit; }
+.input.mono input:-webkit-autofill::first-line { font-family: var(--mono); }

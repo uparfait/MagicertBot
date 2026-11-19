@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { asset_version } = require("./asset_version");
 
 const parts_folder = path.join(__dirname, "..", "client", "parts");
 const part_names = ["head", "header", "new_settings", "new_options", "new_finish", "renew", "check", "footer"];
@@ -42,7 +43,7 @@ function escape_html(text) {
 function build_page(req) {
   const tab = find_tab(req.path);
   const base_url = `${req.protocol}://${req.get("host")}`;
-  const values = { ...tabs[tab], base_url, canonical: base_url + tabs[tab].path };
+  const values = { ...tabs[tab], base_url, canonical: base_url + tabs[tab].path, asset_version };
 
   for (const name of Object.keys(tabs)) {
     values[`${name}_selected`] = String(name === tab);

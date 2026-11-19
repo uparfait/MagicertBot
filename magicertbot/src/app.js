@@ -11,7 +11,8 @@ setup_crash_guard();
 
 const app = express();
 const client_folder = path.join(__dirname, "..", "client");
-const send_page = (req, res) => res.type("html").send(build_page(req));
+// The page is never kept by the browser, so it always points to the newest files.
+const send_page = (req, res) => res.set("Cache-Control", "no-cache").type("html").send(build_page(req));
 
 app.disable("x-powered-by");
 app.set("trust proxy", true);
@@ -25,7 +26,9 @@ app.use((req, res, next) => {
 
 // The page parts are joined on the server, so they are never sent alone.
 app.use("/parts", send_page);
-// The browser asks each time if a file changed, so updates show up at once.
+// Styles and scripts live under a fingerprinted address, so they can be
+// kept for a long time: a changed file always gets a new address.
+app.use("/assets/:version", express.static(client_folder, { index: false, maxAge: "365d", immutable: true }));
 app.use(express.static(client_folder, { index: false, maxAge: 0 }));
 app.use(seo_routes);
 // Every API request goes through the encrypted handshake first.
