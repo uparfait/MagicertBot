@@ -7,6 +7,7 @@ import { setup_new_form } from "./new_form.js";
 import { setup_new_submit } from "./new_submit.js";
 import { setup_renew } from "./renew.js";
 import { setup_check } from "./check.js";
+import { setup_notice } from "./notice.js";
 
 hydrate_icons();
 setup_copy();
@@ -16,3 +17,4 @@ setup_new_form();
 setup_new_submit();
 setup_renew();
 setup_check();
+setup_notice();

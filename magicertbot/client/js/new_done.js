@@ -5,6 +5,7 @@ import { settings } from "./new_state.js";
 import { fill, update } from "./new_form.js";
 import { render_domains } from "./domain_rows.js";
 import { life_card, details_list, zip_contents_list, hero, found_from_names } from "./results.js";
+import { mark_unsaved, mark_saved, leave_ok, download_warning } from "./zip_guard.js";
 
 const plain_text = (info) => `This certificate keeps <strong>${info.domains.map(esc).join(", ")}</strong> safe with HTTPS until <strong>${fmt_date(info.to)}</strong>.
   Add <strong>fullchain.pem</strong> and <strong>privkey.pem</strong> to your web server settings. The README in the zip shows how.
@@ -28,6 +29,7 @@ export function show_new_done(panel, result) {
   out.innerHTML = `${hero(seal_icon(), "Your certificate is ready", what)}
     ${life_card(info)}
     <p class="plain">${plain_text(info)}</p>
+    ${download_warning}
     <div class="actions">
       <button type="button" class="btn btn_primary" data-download>${icon("download")}Download zip</button>
       <button type="button" class="btn btn_outline" data-another>${icon("plus")}Make another</button>
@@ -38,13 +40,15 @@ export function show_new_done(panel, result) {
     <h3 class="section_title">Certificate details</h3>
     ${details_list(info)}`;
 
-  $("[data-download]", out).addEventListener("click", () => download_base64(result.file_name, result.zip_base64));
+  $("[data-download]", out).addEventListener("click", () => { download_base64(result.file_name, result.zip_base64); mark_saved(); });
   $("[data-another]", out).addEventListener("click", () => {
+    if (!leave_ok()) return;
     Object.assign(settings, { domains: [""], cert_name: "", cert_name_touched: false, agree: false });
     render_domains(0);
     fill();
     update();
     show_view(panel, "form");
   });
+  mark_unsaved();
   show_view(panel, "done");
 }

@@ -5,8 +5,8 @@
 .brand span { font-size: 19px; font-weight: 700; letter-spacing: -.2px; }
 .intro { padding: 28px 0 8px; text-align: center; container-type: inline-size; }
 /* The heading fills the whole width on one line: its size follows the
-   width of the box (6.1% of it), so it fits on every screen. */
-.intro h1 { margin: 0; font-family: var(--tech); font-size: 30px; font-size: 6.1cqi; line-height: 1.1; letter-spacing: -.01em; white-space: nowrap; }
+   width of the box (5.9% of it, with its warning sign), so it fits on every screen. */
+.intro h1 { margin: 0; font-family: var(--tech); font-size: 29px; font-size: 5.9cqi; line-height: 1.1; letter-spacing: -.01em; white-space: nowrap; }
 .intro p { margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
 
 /* Tabs look like pills joined by a short line. */

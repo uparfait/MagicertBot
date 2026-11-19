@@ -5,11 +5,13 @@
 There is no database and no file is written. Keys and certificates live
 in memory only while a request runs.
 
+The warning sign by the heading says this. A finished zip shows a notice
+to download it, and the page asks before it is left behind (`zip_guard.js`).
+
 ## Encrypted and sealed
 
 Every request and answer is encrypted with a fresh key, and the order
-details are sealed so the browser cannot read or change them. See
-`secure_requests.md`.
+details are sealed. See `secure_requests.md`.
 
 ## The order stays with Let's Encrypt
 

@@ -3,6 +3,7 @@ import { icon, gear, seal_icon } from "./icons.js";
 import { show_view } from "./views.js";
 import { life_card, details_list, zip_contents_list, hero, found_from_names } from "./results.js";
 import { renew } from "./renew.js";
+import { mark_unsaved, mark_saved, leave_ok, download_warning } from "./zip_guard.js";
 
 // The renewed certificate, ready to download.
 export function show_renew_done(panel, result, drop) {
@@ -23,6 +24,7 @@ export function show_renew_done(panel, result, drop) {
   out.innerHTML = `${hero(seal_icon(), "Your certificate is renewed", esc(info.domains.join(", ")))}
     ${life_card(info)}
     <p class="plain">It used to end on <strong>${fmt_date(renew.info.to)}</strong>. It now ends on <strong>${fmt_date(info.to)}</strong>. ${key_text}</p>
+    ${download_warning}
     <div class="actions">
       <button type="button" class="btn btn_primary" data-download>${icon("download")}Download new zip</button>
       <button type="button" class="btn btn_outline" data-another>${icon("upload")}Renew another</button>
@@ -33,11 +35,13 @@ export function show_renew_done(panel, result, drop) {
     <h3 class="section_title">New certificate details</h3>
     ${details_list(info)}`;
 
-  $("[data-download]", out).addEventListener("click", () => download_base64(result.file_name, result.zip_base64));
+  $("[data-download]", out).addEventListener("click", () => { download_base64(result.file_name, result.zip_base64); mark_saved(); });
   $("[data-another]", out).addEventListener("click", () => {
+    if (!leave_ok()) return;
     drop.reset();
     $("#renew_setup").hidden = true;
     show_view(panel, "upload");
   });
+  mark_unsaved();
   show_view(panel, "done");
 }
