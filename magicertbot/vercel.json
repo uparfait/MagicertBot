@@ -5,7 +5,7 @@
   "outputDirectory": "public",
   "functions": {
     "api/index.js": {
-      "includeFiles": "{public,views}/**",
+      "includeFiles": "{public,views,acme}/**",
       "maxDuration": 60
     }
   },

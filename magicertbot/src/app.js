@@ -36,6 +36,7 @@ app.use("/parts", go_home);
 app.use("/assets/:version", express.static(public_folder, { index: false, maxAge: "365d", immutable: true }));
 app.use(express.static(public_folder, { index: false, maxAge: 0 }));
 app.use(seo_routes);
+app.get("/.well-known/acme-challenge/:token", require("./acme_files").send_check_file);
 // Every API request goes through the encrypted handshake first.
 app.use("/api", payload);
 app.use("/api/certificate", certificate_routes);
