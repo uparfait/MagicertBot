@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const { build_page } = require("./page");
 const seo_routes = require("./seo_routes");
+const certificate_routes = require("./routes/certificate_routes");
 
 const app = express();
 const client_folder = path.join(__dirname, "..", "client");
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 app.use("/parts", send_page);
 app.use(express.static(client_folder, { index: false, maxAge: "1h" }));
 app.use(seo_routes);
+app.use("/api/certificate", certificate_routes);
 
 app.use("/api", (req, res) => {
   res.status(404).json({ message: "This address does not exist." });
