@@ -16,12 +16,11 @@ All colours live in `client/css/base.css` as CSS variables.
 | Field border | `#D3DEE6` | The soft border every field has at rest |
 | Mauve | `#8E5B8A` | The `*` on required fields |
 
-White text on the primary blue passes the WCAG AA level.
-
 ## Fonts
 
-**Plus Jakarta Sans** for text and **JetBrains Mono** for codes, from Google
-Fonts. The main heading is in capitals and fills the full width on one line.
+**Plus Jakarta Sans** for text, **JetBrains Mono** for codes and **Space
+Grotesk** for the main heading, which is in capitals and fills the full
+width on one line. Selected text is white on the primary blue.
 
 ## Fields
 
