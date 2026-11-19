@@ -9,6 +9,9 @@ const public_folder = path.join(__dirname, "..", "public");
 // the address changes too, and no browser can keep running old code.
 function make_asset_version() {
   const hash = crypto.createHash("sha256");
+  // Change this word to give every file a new address at once, for example
+  // after a change in how the files are sent.
+  hash.update("sent_as_written");
   for (const folder of ["css", "js"]) {
     const full = path.join(public_folder, folder);
     for (const name of fs.readdirSync(full).sort()) {
