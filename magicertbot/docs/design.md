@@ -18,8 +18,8 @@ All colours live in `client/css/base.css` as CSS variables.
 
 ## Fonts
 
-**Plus Jakarta Sans** for text, **JetBrains Mono** for codes and **Space
-Grotesk** for the main heading (each word starts with a capital, SSL stays
+**Plus Jakarta Sans** for text, **JetBrains Mono** for codes and **Chakra
+Petch** for the main heading (each word starts with a capital, SSL stays
 in capitals), which fills the full width on one line. Only labels, hints,
 inputs and results can be selected (`select.css`), in white on blue.
 

@@ -24,7 +24,7 @@
   --mauve: #8E5B8A;
   --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --tech: "Space Grotesk", var(--font);
+  --tech: "Chakra Petch", var(--font);
 }
 
 * { box-sizing: border-box; }
