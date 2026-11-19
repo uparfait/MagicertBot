@@ -1,7 +1,6 @@
 import { seal_request, open_line, forget_server_key } from "./secure_channel.js";
 
-// Sends an encrypted request. XMLHttpRequest lets us follow the upload
-// and read each answer line the moment it arrives.
+// Sends an encrypted request, following the upload and each answer line as it arrives.
 function post(url, key, envelope, handlers) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -29,6 +28,7 @@ function post(url, key, envelope, handlers) {
 
     xhr.open("POST", url);
     xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.timeout = 90000; // If nothing finishes in 90 seconds, stop and offer "Try again".
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable) handlers.on_upload?.((event.loaded / event.total) * 100);
     };
@@ -42,6 +42,7 @@ function post(url, key, envelope, handlers) {
       reject(error);
     };
     xhr.onerror = () => reject(new Error("We could not reach the server. Check your internet connection and try again."));
+    xhr.ontimeout = () => reject(new Error("This took too long, so we stopped waiting. Please try again."));
     xhr.send(JSON.stringify(envelope));
   });
 }
