@@ -41,16 +41,9 @@ async function check_site(event) {
   set_error("site_address", "");
   $("[data-work_lead]", panel()).textContent = `We are connecting to ${host}.`;
   show_view(panel(), "work");
-  try {
-    const result = await run_with_loader($("[data-loader]", panel()), "/api/check/domain", { domain: host });
-    $("[data-report]", panel()).innerHTML = site_report_html(result);
-    show_view(panel(), "report");
-  } catch (error) {
-    setTimeout(() => {
-      show_view(panel(), "upload");
-      set_error("site_address", error.message);
-    }, 1200);
-  }
+  const result = await run_with_loader($("[data-loader]", panel()), "/api/check/domain", { domain: host }, { back_view: "upload", back_text: "Check another" });
+  $("[data-report]", panel()).innerHTML = site_report_html(result);
+  show_view(panel(), "report");
 }
 
 export function setup_check() {

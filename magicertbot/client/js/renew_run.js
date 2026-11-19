@@ -25,6 +25,7 @@ export function run_renewal(drop) {
   start_order_flow({
     panel,
     start_url: "/api/certificate/renew",
+    back_view: "upload",
     start_body: {
       zip_base64: renew.zip_base64,
       reuse_key: renew.reuse_key,

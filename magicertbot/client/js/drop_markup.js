@@ -8,4 +8,5 @@ export const drop_markup = (title) => `<label class="drop"><input type="file" ac
       <span class="mini_load" hidden>${gear()}<span class="pct">0%</span><span class="hint up_name"></span>
       <span class="bar" role="progressbar" aria-label="Upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></span></span></label>
     <div class="file_card" hidden><span class="list"><span class="ico">${icon("zip")}</span></span><span class="name"></span><span class="size"></span><button type="button" class="copy_btn light change">Change</button></div>
-    <p class="error" role="alert" style="margin:10px 0 0"></p>`;
+    <p class="error" role="alert" style="margin:10px 0 0"></p>
+    <div class="actions single" hidden data-upload_retry><button type="button" class="btn btn_outline">${icon("retry")}Try again</button></div>`;

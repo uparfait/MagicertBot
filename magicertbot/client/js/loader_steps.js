@@ -16,3 +16,11 @@ export function mark_steps(list, current) {
     item.querySelector(".dot").innerHTML = state === "done" ? icon("check") : state === "now" ? gear() : "";
   });
 }
+
+// The step that failed gets a red alert sign instead of the gear.
+export function mark_failed(list, current) {
+  const item = list.children[current];
+  if (!item) return;
+  item.className = "failed";
+  item.querySelector(".dot").innerHTML = icon("alert");
+}

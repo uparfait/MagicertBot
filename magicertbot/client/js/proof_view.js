@@ -28,7 +28,6 @@ export function render_proof(panel, order, on_create) {
 
     $("[data-prove_lead]", panel).textContent = leads[method];
     $("[data-prove_body]", panel).innerHTML = `${can_use_file ? method_picker(method) : ""}${method === "http" ? http_checklist() : ""}${cards}${needs_dns_note ? dns_note() : ""}
-      <p class="form_alert" role="alert" data-prove_alert></p>
       <div class="actions single"><button type="button" class="btn btn_primary" data-create>Check and create certificate</button></div>`;
 
     $$("[data-proof_url]", panel).forEach((input) => {

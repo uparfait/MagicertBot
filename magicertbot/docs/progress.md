@@ -7,8 +7,9 @@ note, a bar that fills up and the list of steps.
 
 File: `src/stream.js`
 
-The server answers right away and keeps the answer open. It writes one
-line of JSON for each update (this is called NDJSON):
+The server answers right away and keeps the answer open. It sends one
+line for each update (this is called NDJSON). Inside, before encryption,
+the lines look like this:
 
 ```json
 {"type":"plan","steps":["Getting ready","Creating your Let's Encrypt account"]}
@@ -18,21 +19,17 @@ line of JSON for each update (this is called NDJSON):
 
 The **plan** lists every step first, so the page can show what comes
 next. Each **progress** line marks the step running now. The last line
-is either **done** with the result or **error** with a plain message.
+is **done** with the result, or **error** with the real reason.
 
-Each line is encrypted before it is sent (see `secure_requests.md`).
+On the wire every line is encrypted and looks like
+`{"sealed":{"iv":"...","data":"..."}}` (see `secure_requests.md`).
 
-## In the browser: reading lines as they arrive
+## In the browser
 
-File: `client/js/request.js`
+Files: `client/js/request.js`, `client/js/loader.js`
 
-`XMLHttpRequest` reports both the upload (`xhr.upload.onprogress`) and
-each piece of the answer as it arrives (`xhr.onprogress`). Every full
-line is opened and handled in order.
-
-## Turning it into a percent
-
-File: `client/js/loader.js`
+`XMLHttpRequest` reports both the upload and each piece of the answer as
+it arrives. Every full line is opened and handled in order.
 
 - When a zip is uploaded, the first 20% follows the real upload.
 - The rest follows the server's steps: with 4 steps, each one is 25%.
@@ -40,19 +37,23 @@ File: `client/js/loader.js`
   stuck, but it never passes the end of the step.
 - The number never goes backwards.
 
-## The step list
+The step list (`client/js/loader_steps.js`) shows a grey dot for steps
+still to come, a small turning gear for the step running now and a green
+tick for finished steps.
 
-File: `client/js/loader_steps.js`
+## When something goes wrong
 
-- a grey dot for steps still to come
-- a small turning gear for the step running now
-- a green tick for finished steps
+File: `client/js/run_task.js`
+
+The gear stops and turns red, the step that failed gets a red alert sign,
+and the note shows the real reason, like Let's Encrypt refusing an
+address. **Try again** sends the same request once more, and a second
+button goes back to where it can be fixed ("Change settings", "Back to
+your proof" or "Check another"). A failed zip upload has its own **Try
+again** button that sends the same file again.
 
 ## The gear
 
-The gear is an SVG turned by a CSS animation. If something goes wrong it
-stops and turns red, and the note shows the reason. People who ask their
-device for less motion see a much slower turn.
-
-The note sits in a `role="status"` area, so screen readers read each new
-step out loud.
+An SVG turned by a CSS animation. People who ask their device for less
+motion see a much slower turn. The note sits in a `role="status"` area,
+so screen readers read each new step out loud.

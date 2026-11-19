@@ -1,6 +1,6 @@
 import { $ } from "./helpers.js";
 import { gear } from "./icons.js";
-import { render_steps, mark_steps } from "./loader_steps.js";
+import { render_steps, mark_steps, mark_failed } from "./loader_steps.js";
 
 // The gear loader: a big percent, a short note, a bar and the list of
 // steps the server is working through. The first part of the bar can
@@ -22,7 +22,6 @@ export function create_loader(box, upload_share = 0) {
     else if (view.running) requestAnimationFrame(paint);
   };
   requestAnimationFrame(paint);
-
   const place = (from, to, text) => {
     view.target = upload_share + (from / 100) * (100 - upload_share);
     view.ceiling = upload_share + (to / 100) * (100 - upload_share);
@@ -55,6 +54,7 @@ export function create_loader(box, upload_share = 0) {
       view.running = false;
       box.classList.add("failed");
       label.textContent = message;
+      mark_failed(list, view.current);
     },
   };
 }

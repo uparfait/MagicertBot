@@ -21,6 +21,7 @@ export function setup_new_submit() {
     start_order_flow({
       panel,
       start_url: "/api/certificate/start",
+      back_view: "form",
       start_body: {
         domains: clean_domains(),
         email: snapshot.no_email ? "" : snapshot.email,

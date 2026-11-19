@@ -18,5 +18,5 @@
 .or_line { display: flex; align-items: center; gap: 12px; margin: 24px 0 18px; color: var(--muted); font-size: 13px; font-weight: 600; }
 .or_line::before, .or_line::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 
-.form_alert { margin: 16px 0 0; padding: 14px 18px; border-radius: 20px; background: var(--bad_bg); color: var(--bad); font-size: 14px; font-weight: 500; }
-.form_alert:empty { display: none; }
+/* "Try again" and "Back" under a failed step. */
+.retry_actions { width: 100%; margin-top: 18px; }

@@ -35,6 +35,8 @@
 .loader_steps li.now .dot::before, .loader_steps li.done .dot::before { display: none; }
 .loader_steps li.done { color: var(--muted); }
 .loader_steps li.done .dot { color: var(--good); }
+.loader_steps li.failed { color: var(--bad); font-weight: 600; }
+.loader_steps li.failed .dot::before { display: none; }
 .loader_steps .gear { width: 18px; height: 18px; }
 .mini_load { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; max-width: 320px; margin: 0 auto; }
 .mini_load .gear { width: 40px; height: 40px; }
