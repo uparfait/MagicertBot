@@ -5,6 +5,9 @@ const seo_routes = require("./seo_routes");
 const certificate_routes = require("./routes/certificate_routes");
 const check_routes = require("./routes/check_routes");
 const payload = require("./payload");
+const { setup_crash_guard } = require("./crash_guard");
+
+setup_crash_guard();
 
 const app = express();
 const client_folder = path.join(__dirname, "..", "client");
@@ -22,7 +25,8 @@ app.use((req, res, next) => {
 
 // The page parts are joined on the server, so they are never sent alone.
 app.use("/parts", send_page);
-app.use(express.static(client_folder, { index: false, maxAge: "1h" }));
+// The browser asks each time if a file changed, so updates show up at once.
+app.use(express.static(client_folder, { index: false, maxAge: 0 }));
 app.use(seo_routes);
 // Every API request goes through the encrypted handshake first.
 app.use("/api", payload);
@@ -38,6 +42,7 @@ app.get("*", send_page);
 
 // Friendly replies when a request is too big or cannot be read.
 app.use((error, req, res, next) => {
+  if (res.headersSent) return res.end();
   const too_big = error.type === "entity.too.large";
   const message = too_big
     ? "That file is too big. A certificate ZIP is usually only a few KB."

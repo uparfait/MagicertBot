@@ -49,5 +49,5 @@ Both are built per request, so they always show the right domain.
 ## Speed
 
 Fast pages rank better. The page has no large libraries, the files are
-small, the fonts load with `display=swap`, and files are cached for one
-hour.
+small, the fonts load with `display=swap`, and the browser keeps the
+files but checks for updates on each visit.
