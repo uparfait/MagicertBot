@@ -4,9 +4,9 @@
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
 .brand span { font-size: 19px; font-weight: 700; letter-spacing: -.2px; }
 .intro { padding: 28px 0 8px; text-align: center; container-type: inline-size; }
-/* The heading, in capitals, fills the whole width on one line: its size follows the
-   width of the box (5.65% of it), so it fits on every screen. */
-.intro h1 { margin: 0; font-family: var(--tech); font-size: 28px; font-size: 5.65cqi; line-height: 1.1; letter-spacing: -.01em; white-space: nowrap; text-transform: uppercase; }
+/* The heading fills the whole width on one line: its size follows the
+   width of the box (6.1% of it), so it fits on every screen. */
+.intro h1 { margin: 0; font-family: var(--tech); font-size: 30px; font-size: 6.1cqi; line-height: 1.1; letter-spacing: -.01em; white-space: nowrap; }
 .intro p { margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
 
 /* Tabs look like pills joined by a short line. */

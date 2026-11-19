@@ -19,9 +19,9 @@ All colours live in `client/css/base.css` as CSS variables.
 ## Fonts
 
 **Plus Jakarta Sans** for text, **JetBrains Mono** for codes and **Space
-Grotesk** for the main heading, which is in capitals and fills the full
-width on one line. Only labels, descriptions, inputs and results can be
-selected (`client/css/select.css`), and selected text is white on blue.
+Grotesk** for the main heading, which starts each word with a capital and
+fills the full width on one line. Only labels, descriptions, inputs and
+results can be selected (`client/css/select.css`), in white on blue.
 
 ## Fields
 
