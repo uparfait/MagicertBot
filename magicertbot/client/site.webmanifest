@@ -2,7 +2,7 @@
   "name": "MagicertBot",
   "short_name": "MagicertBot",
   "description": "Get, renew and check free Let's Encrypt SSL certificates.",
-  "start_url": "/",
+  "start_url": "/create-new-certificate",
   "display": "standalone",
   "background_color": "#F4F7FA",
   "theme_color": "#1B78B3",

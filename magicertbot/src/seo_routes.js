@@ -1,5 +1,5 @@
 const express = require("express");
-const { tabs } = require("./page");
+const { tabs, home_path } = require("./page");
 
 // Files that help search engines find and understand the site.
 const router = express.Router();
@@ -19,7 +19,7 @@ router.get("/sitemap.xml", (req, res) => {
     "  <url>",
     `    <loc>${base_url}${tab.path}</loc>`,
     "    <changefreq>monthly</changefreq>",
-    `    <priority>${tab.path === "/" ? "1.0" : "0.8"}</priority>`,
+    `    <priority>${tab.path === home_path ? "1.0" : "0.8"}</priority>`,
     "  </url>",
   ].join("\n"));
 

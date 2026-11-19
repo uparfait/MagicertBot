@@ -1,12 +1,13 @@
 # One page, three tabs
 
-## The same page on every address
+## One page, three addresses
 
 Files: `src/app.js`, `src/page.js`
 
-Express sends the same page for every address that is not a file or an
-API route. So `/`, `/renew`, `/check` and even a mistyped address all
-open the app.
+Each tab has its own address: `/create-new-certificate`,
+`/renew-certificate` and `/check-existing-certificate`. Any other address
+that is not a file or an API route, including `/`, is sent to
+`/create-new-certificate` with a permanent (301) redirect.
 
 The page is kept in small parts inside `client/parts/`:
 

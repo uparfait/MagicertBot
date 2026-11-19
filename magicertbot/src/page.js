@@ -12,36 +12,37 @@ const template = part_names
 
 const tabs = {
   new: {
-    path: "/",
+    path: "/create-new-certificate",
     title: "Free SSL Certificates Made Simple",
     description: "Create, renew and check free SSL certificates for your website. Pick your web server, prove the site is yours and download everything in one zip.",
   },
   renew: {
-    path: "/renew",
+    path: "/renew-certificate",
     title: "Renew your SSL certificate",
     description: "Upload the zip with your current SSL certificate and get a fresh one for the same addresses. It lasts another 90 days.",
   },
   check: {
-    path: "/check",
+    path: "/check-existing-certificate",
     title: "Check an SSL certificate",
     description: "Check an SSL certificate from your zip or a live website. See what it covers, who issued it, how many days it has left and what to fix.",
   },
 };
 
+// The tab for an address, or null when the address is not a tab.
 function find_tab(url_path) {
-  const clean_path = url_path.replace(/\/+$/, "") || "/";
-  const found = Object.keys(tabs).find((name) => tabs[name].path === clean_path);
-  return found || "new";
+  const clean_path = url_path.replace(/\/+$/, "").toLowerCase();
+  return Object.keys(tabs).find((name) => tabs[name].path === clean_path) || null;
 }
 
-function escape_html(text) {
-  const swaps = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
-  return String(text).replace(/[&<>"']/g, (letter) => swaps[letter]);
-}
+// Where every other address is sent.
+const home_path = tabs.new.path;
+
+const swaps = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const escape_html = (text) => String(text).replace(/[&<>"']/g, (letter) => swaps[letter]);
 
 // Fills in the title, description, address and the open tab for this request.
 function build_page(req) {
-  const tab = find_tab(req.path);
+  const tab = find_tab(req.path) || "new";
   const base_url = `${req.protocol}://${req.get("host")}`;
   const values = { ...tabs[tab], base_url, canonical: base_url + tabs[tab].path, asset_version };
 
@@ -55,4 +56,4 @@ function build_page(req) {
   return template.replace(/{{(\w+)}}/g, (match, key) => escape_html(values[key] ?? ""));
 }
 
-module.exports = { build_page, tabs };
+module.exports = { build_page, find_tab, home_path, tabs };

@@ -13,9 +13,9 @@ File: `src/page.js`
 
 | Address | Title |
 | --- | --- |
-| `/` | Free SSL Certificates Made Simple from MagicertBot |
-| `/renew` | Renew your SSL certificate from MagicertBot |
-| `/check` | Check an SSL certificate from MagicertBot |
+| `/create-new-certificate` | Free SSL Certificates Made Simple from MagicertBot |
+| `/renew-certificate` | Renew your SSL certificate from MagicertBot |
+| `/check-existing-certificate` | Check an SSL certificate from MagicertBot |
 
 Each description says in plain words what that tab does.
 

@@ -1,5 +1,5 @@
 // Tabs that work with a mouse, touch and keyboard (arrow keys, Home, End).
-// Each tab has its own address, so /renew and /check can be shared as links.
+// Each tab has its own address, like /renew-certificate, so it can be shared as a link.
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 
 function select_tab(tab, { focus = false, push = true } = {}) {
