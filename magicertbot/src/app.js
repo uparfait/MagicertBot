@@ -4,6 +4,7 @@ const { build_page } = require("./page");
 const seo_routes = require("./seo_routes");
 const certificate_routes = require("./routes/certificate_routes");
 const check_routes = require("./routes/check_routes");
+const payload = require("./payload");
 
 const app = express();
 const client_folder = path.join(__dirname, "..", "client");
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
 app.use("/parts", send_page);
 app.use(express.static(client_folder, { index: false, maxAge: "1h" }));
 app.use(seo_routes);
+// Every API request goes through the encrypted handshake first.
+app.use("/api", payload);
 app.use("/api/certificate", certificate_routes);
 app.use("/api/check", check_routes);
 

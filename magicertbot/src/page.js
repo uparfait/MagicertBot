@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const parts_folder = path.join(__dirname, "..", "client", "parts");
-const part_names = ["head", "header", "panel_new", "panel_renew", "panel_check", "footer"];
+const part_names = ["head", "header", "new_settings", "new_options", "new_finish", "renew", "check", "footer"];
 
 // The page is split into small parts. We join them once when the app starts.
 const template = part_names
@@ -12,18 +12,18 @@ const template = part_names
 const tabs = {
   new: {
     path: "/",
-    title: "Free SSL certificates in minutes",
-    description: "Get a free Let's Encrypt SSL certificate for your website in a few minutes. Add one DNS record, then download your certificate and key.",
+    title: "Free SSL Certificates Made Simple",
+    description: "Create, renew and check free SSL certificates for your website. Pick your web server, prove the site is yours and download everything in one zip.",
   },
   renew: {
     path: "/renew",
     title: "Renew your SSL certificate",
-    description: "Upload your current SSL certificate and get a fresh Let's Encrypt certificate for the same domains, with live progress as it happens.",
+    description: "Upload the zip with your current SSL certificate and get a fresh one for the same addresses. It lasts another 90 days.",
   },
   check: {
     path: "/check",
     title: "Check an SSL certificate",
-    description: "Check any SSL certificate from a file or a live website. See the domains it covers, who issued it and how many days it has left.",
+    description: "Check an SSL certificate from your zip or a live website. See what it covers, who issued it, how many days it has left and what to fix.",
   },
 };
 
@@ -48,7 +48,7 @@ function build_page(req) {
     values[`${name}_selected`] = String(name === tab);
     values[`${name}_tabindex`] = name === tab ? "0" : "-1";
     values[`${name}_hidden`] = name === tab ? "" : "hidden";
-    values[`${name}_title`] = `${tabs[name].title} | MagiCertbot`;
+    values[`${name}_title`] = `${tabs[name].title} from MagicertBot`;
   }
 
   return template.replace(/{{(\w+)}}/g, (match, key) => escape_html(values[key] ?? ""));

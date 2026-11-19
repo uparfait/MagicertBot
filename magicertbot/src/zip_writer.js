@@ -1,51 +1,40 @@
 const adm_zip = require("adm-zip");
+const { make_readme } = require("./readme_writer");
 
-// The same file names certbot uses, so the files feel familiar.
+// Splits the full chain into your own certificate and the middle one.
 function split_chain(full_chain) {
   const blocks = full_chain.match(/-----BEGIN CERTIFICATE-----[\s\S]+?-----END CERTIFICATE-----/g) || [];
-  const [certificate = "", ...chain] = blocks;
-  return { certificate: `${certificate}\n`, chain: `${chain.join("\n")}\n` };
+  const [leaf = "", ...chain] = blocks;
+  return { leaf: `${leaf}\n`, chain: chain.length ? `${chain.join("\n")}\n` : "" };
 }
 
-function make_readme({ domains, valid_until, staging }) {
-  return [
-    "Your SSL certificate from MagiCertbot",
-    "",
-    `Domains: ${domains.join(", ")}`,
-    `Valid until: ${valid_until.slice(0, 10)}`,
-    staging ? "Note: this is a test certificate. Browsers will not trust it." : "",
-    "",
-    "fullchain.pem  Your certificate plus the chain. Most web servers want this one.",
-    "privkey.pem    Your private key. Keep it secret and never share it.",
-    "cert.pem       Only your certificate, for servers that ask for it alone.",
-    "chain.pem      The Let's Encrypt certificates that link yours to a trusted root.",
-    "request.csr    The signing request. Only needed if your host asks for it.",
-    "",
-    "To renew, upload this ZIP in the Renew tab before the date above.",
-    "",
-  ].join("\r\n");
-}
-
-// Puts every file into one ZIP and returns it as base64 text for the browser.
-function make_certificate_zip(details) {
-  const { certificate, chain } = split_chain(details.certificate);
-  const zip = new adm_zip();
-  const files = {
-    "fullchain.pem": details.certificate,
-    "privkey.pem": details.private_key,
-    "cert.pem": certificate,
+// Packs every file into one folder named after the certificate,
+// with the same file names Certbot uses.
+function make_certificate_zip({ info, certificate, private_key, settings }) {
+  const { leaf, chain } = split_chain(certificate);
+  const entries = {
+    "cert.pem": leaf,
     "chain.pem": chain,
-    "request.csr": details.csr,
-    "README.txt": make_readme(details),
+    "fullchain.pem": certificate,
+    "privkey.pem": private_key,
+    "README.txt": make_readme(info),
   };
 
-  for (const [name, text] of Object.entries(files)) zip.addFile(name, Buffer.from(text, "utf8"));
+  const zip = new adm_zip();
+  const included = [];
+  for (const [name, text] of Object.entries(entries)) {
+    if (!text.trim()) continue;
+    zip.addFile(`${info.name}/${name}`, Buffer.from(text, "utf8"));
+    included.push(name);
+  }
 
-  const first_domain = details.domains[0].replace("*.", "wildcard.");
-  const test_tag = details.staging ? "_test" : "";
+  const buffer = zip.toBuffer();
+  const ending = settings.is_renewal ? "renewed" : "certificate";
   return {
-    file_name: `${first_domain}${test_tag}_certificate.zip`,
-    zip_base64: zip.toBuffer().toString("base64"),
+    file_name: `${info.name.replace(/[^a-z0-9.-]/gi, "_")}_${ending}.zip`,
+    zip_base64: buffer.toString("base64"),
+    zip_size: buffer.length,
+    included,
   };
 }
 

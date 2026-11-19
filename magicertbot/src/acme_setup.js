@@ -1,7 +1,7 @@
 const acme = require("acme-client");
 const { make_friendly } = require("./errors");
 
-// acme-client speaks the ACME language, the same one certbot uses
+// acme-client speaks ACME, the same language Certbot uses
 // to talk to Let's Encrypt.
 function pick_directory(staging) {
   const servers = acme.directory.letsencrypt;
@@ -27,8 +27,7 @@ function check_state(state) {
   }
 
   const expected_host = new URL(pick_directory(state.staging)).host;
-  const addresses = [state.order_url, state.account_url];
-  const is_safe = addresses.every((address) => {
+  const is_safe = [state.order_url, state.account_url].every((address) => {
     try {
       return new URL(address).host === expected_host;
     } catch {
@@ -40,10 +39,12 @@ function check_state(state) {
   return state;
 }
 
-function find_dns_challenge(authorization) {
-  const challenge = authorization.challenges.find((item) => item.type === "dns-01");
-  if (!challenge) throw make_friendly("Let's Encrypt did not offer a DNS check for this domain.");
-  return challenge;
+// "http-01" is the check file, "dns-01" is the DNS record.
+function find_challenge(authorization, type) {
+  return authorization.challenges.find((item) => item.type === type) || null;
 }
 
-module.exports = { make_client, check_state, find_dns_challenge };
+// A readable name for an address, with *. in front for wildcards.
+const address_label = (authorization) => `${authorization.wildcard ? "*." : ""}${authorization.identifier.value}`;
+
+module.exports = { make_client, check_state, find_challenge, address_label };

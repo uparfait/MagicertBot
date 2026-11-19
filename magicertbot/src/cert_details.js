@@ -1,8 +1,6 @@
 const { X509Certificate, createPrivateKey } = require("crypto");
 const { make_friendly } = require("./errors");
-
-const curve_names = { prime256v1: "P-256", secp384r1: "P-384", secp521r1: "P-521" };
-const day_in_ms = 24 * 60 * 60 * 1000;
+const { read_field, issuer_name, describe_key, signature_name } = require("./cert_names");
 
 // Node's built-in X509Certificate reads every certificate in the text.
 function read_certificates(pem) {
@@ -15,46 +13,37 @@ function read_certificates(pem) {
   }
 }
 
-function read_field(text, name) {
-  const line = String(text || "").split("\n").find((row) => row.startsWith(`${name}=`));
-  return line ? line.slice(name.length + 1) : "";
+function read_domains(cert) {
+  const names = (cert.subjectAltName || "").split(", ").filter((item) => item.startsWith("DNS:")).map((item) => item.slice(4));
+  return names.length ? names : [read_field(cert.subject, "CN")].filter(Boolean);
 }
 
-function read_domains(certificate) {
-  const names = (certificate.subjectAltName || "").split(", ").filter((item) => item.startsWith("DNS:")).map((item) => item.slice(4));
-  return names.length ? names : [read_field(certificate.subject, "CN")].filter(Boolean);
-}
-
-function describe_key(public_key) {
-  const info = public_key.asymmetricKeyDetails || {};
-  if (public_key.asymmetricKeyType === "rsa") return `RSA ${info.modulusLength} bit`;
-  if (public_key.asymmetricKeyType === "ec") return `ECDSA ${curve_names[info.namedCurve] || info.namedCurve}`;
-  return String(public_key.asymmetricKeyType).toUpperCase();
-}
-
-function key_matches(certificate, key_pem) {
-  try {
-    return certificate.checkPrivateKey(createPrivateKey(key_pem));
-  } catch {
-    throw make_friendly("We found a private key in your ZIP but could not read it. If it has a password, please remove it.");
-  }
-}
-
-function describe_certificate(certificate, extra = {}) {
-  const valid_from = new Date(certificate.validFrom);
-  const valid_to = new Date(certificate.validTo);
-  const days_left = Math.floor((valid_to - Date.now()) / day_in_ms);
-  let status = days_left < 0 ? "expired" : days_left <= 30 ? "expiring" : "valid";
-  if (valid_from > new Date()) status = "not_yet_valid";
+// Everything the page shows about one certificate.
+function read_info(certificate, name = "") {
+  const cert = typeof certificate === "string" ? read_certificates(certificate)[0] : certificate;
+  const domains = read_domains(cert);
+  const clean_name = /^[a-z0-9*][a-z0-9.*_-]{0,120}$/i.test(String(name)) ? String(name) : "";
 
   return {
-    status, days_left, domains: read_domains(certificate),
-    issued_to: read_field(certificate.subject, "O") || read_field(certificate.subject, "CN"),
-    issued_by: [read_field(certificate.issuer, "O"), read_field(certificate.issuer, "CN")].filter(Boolean).join(", "),
-    valid_from: valid_from.toISOString(), valid_to: valid_to.toISOString(),
-    key: describe_key(certificate.publicKey), serial_number: certificate.serialNumber,
-    fingerprint: certificate.fingerprint256, is_self_signed: certificate.checkIssued(certificate), ...extra,
+    name: clean_name || domains[0].replace(/^\*\./, ""),
+    domains,
+    from: new Date(cert.validFrom).toISOString(),
+    to: new Date(cert.validTo).toISOString(),
+    issuer: issuer_name(cert),
+    key: describe_key(cert.publicKey),
+    signature: signature_name(cert.raw),
+    serial: cert.serialNumber.replace(/(..)(?!$)/g, "$1:"),
+    fingerprint: cert.fingerprint256,
+    self_signed: cert.checkIssued(cert),
   };
 }
 
-module.exports = { read_certificates, read_domains, key_matches, describe_certificate };
+function key_matches(cert, key_pem) {
+  try {
+    return cert.checkPrivateKey(createPrivateKey(key_pem));
+  } catch {
+    return false;
+  }
+}
+
+module.exports = { read_certificates, read_domains, read_info, key_matches };

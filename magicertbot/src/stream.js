@@ -1,6 +1,7 @@
 const { friendly_error } = require("./errors");
+const { seal_payload } = require("./handshake");
 
-// Sends progress updates to the browser while the work is still running.
+// Sends progress to the browser while the work is still running.
 // Each update is one line of JSON, so the page can read them one by one.
 function open_stream(res) {
   res.status(200);
@@ -12,30 +13,39 @@ function open_stream(res) {
   res.flushHeaders();
 
   const send = (message) => res.write(`${JSON.stringify(message)}\n`);
+  let steps = [];
 
   return {
-    step: (percent, text) => send({ type: "progress", percent, text }),
-    done: (data) => {
+    // The full list of steps, so the page can show what comes next.
+    plan(list) {
+      steps = list.filter(Boolean);
+      send({ type: "plan", steps });
+    },
+    // Marks one step as the one running now.
+    at(index) {
+      const percent = Math.round((index / Math.max(steps.length, 1)) * 100);
+      send({ type: "progress", index, percent, text: steps[index] || "" });
+    },
+    done(data) {
       send({ type: "done", data });
       res.end();
     },
-    fail: (message) => {
+    fail(message) {
       send({ type: "error", message });
       res.end();
     },
   };
 }
 
-// Wraps a task so it always gets a stream and always ends with
-// either the result or a clear error message.
+// Wraps a task so it always gets a tracker and always ends with
+// either the result or a clear message.
 function stream_route(task) {
   return async (req, res) => {
-    const stream = open_stream(res);
+    const tracker = open_stream(res);
     try {
-      const result = await task(req.body || {}, stream.step);
-      stream.done(result);
+      tracker.done(await task(req.body || {}, tracker));
     } catch (error) {
-      stream.fail(friendly_error(error));
+      tracker.fail(friendly_error(error));
     }
   };
 }

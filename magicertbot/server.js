@@ -4,5 +4,5 @@ const app = require("./src/app");
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`MagiCertbot is running at http://localhost:${port}`);
+  console.log(`MagicertBot is running at http://localhost:${port}`);
 });

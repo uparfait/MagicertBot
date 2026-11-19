@@ -2,38 +2,41 @@ const express = require("express");
 const { stream_route } = require("../stream");
 const { clean_host } = require("../validate");
 const { read_certificate_zip } = require("../zip_reader");
+const { build_report } = require("../cert_report");
 const { fetch_site_certificate } = require("../site_certificate");
-const { read_certificates, key_matches, describe_certificate } = require("../cert_details");
+const { read_info } = require("../cert_details");
 
 const router = express.Router();
 
-// Check the certificate inside an uploaded ZIP file.
-router.post("/file", stream_route(async (body, step) => {
-  step(15, "Opening your ZIP");
-  const files = read_certificate_zip(body.zip_base64);
+// Reads every file in an uploaded zip and builds a report.
+router.post("/file", stream_route((body, tracker) => {
+  tracker.plan([
+    "Opening your zip",
+    "Looking for each certificate file",
+    "Reading your certificate",
+    "Checking the dates",
+    "Checking that your private key matches",
+    "Checking the full chain",
+    "Writing your report",
+  ]);
 
-  step(45, `Reading ${files.certificate_file}`);
-  const certificates = read_certificates(files.certificate_pem);
-
-  step(75, "Looking at the details");
-  const extra = { source: files.certificate_file, chain_length: certificates.length };
-  if (files.key_pem) extra.key_matches = key_matches(certificates[0], files.key_pem);
-  return describe_certificate(certificates[0], extra);
+  tracker.at(0);
+  const zip = read_certificate_zip(body.zip_base64);
+  tracker.at(1);
+  return build_report(zip, tracker);
 }));
 
-// Check the certificate a live website is using right now.
-router.post("/domain", stream_route(async (body, step) => {
+// Reads the certificate a live website is using right now.
+router.post("/domain", stream_route(async (body, tracker) => {
   const host = clean_host(body.domain);
+  tracker.plan([`Connecting to ${host}`, "Reading its certificate", "Writing your report"]);
 
-  step(15, `Connecting to ${host}`);
+  tracker.at(0);
   const site = await fetch_site_certificate(host);
-
-  step(80, "Reading the certificate");
-  return describe_certificate(site.certificate, {
-    host,
-    trusted: site.trusted,
-    trust_note: site.trust_note,
-  });
+  tracker.at(1);
+  const info = read_info(site.certificate, host);
+  tracker.at(2);
+  return { host, info, trusted: site.trusted, trust_note: site.trust_note };
 }));
 
 module.exports = router;

@@ -9,34 +9,36 @@ const { make_friendly } = require("../errors");
 
 const router = express.Router();
 
-// Part one for a new certificate: the person types their domains.
-router.post("/start", stream_route((body, step) => start_order({
+// Part one for a new certificate: the addresses come from the form.
+router.post("/start", stream_route((body, tracker) => start_order({
   domains: clean_domains(body.domains),
   email: clean_email(body.email),
-  staging: Boolean(body.staging),
-}, step)));
+  staging: Boolean(body.test_cert || body.dry_run),
+  dry_run: Boolean(body.dry_run),
+}, tracker)));
 
-// Part one for a renewal: the domains come from the uploaded ZIP.
-// If the ZIP holds the private key, the new certificate keeps using it.
-router.post("/renew", stream_route((body, step) => {
-  step(4, "Opening your ZIP");
-  const files = read_certificate_zip(body.zip_base64);
-  const [certificate] = read_certificates(files.certificate_pem);
+// Part one for a renewal: the addresses come from the certificate in the zip.
+// With "keep the same private key", the key in the zip must match.
+router.post("/renew", stream_route((body, tracker) => {
+  const zip = read_certificate_zip(body.zip_base64);
+  const main = zip.cert || zip.fullchain;
+  if (!main || !zip.privkey) throw make_friendly("This zip needs both your certificate and privkey.pem to renew.");
 
-  if (files.key_pem && !key_matches(certificate, files.key_pem)) {
-    throw make_friendly("The private key in your ZIP does not belong to this certificate. Remove it to get a new key, or add the right one.");
+  const [certificate] = read_certificates(main.text);
+  if (body.reuse_key && !key_matches(certificate, zip.privkey.text)) {
+    throw make_friendly("The private key in your zip does not belong to this certificate, so it can't be kept. Turn off \"Keep the same private key\" to get a new one.");
   }
 
-  step(8, `Found ${read_domains(certificate).join(", ")}`);
   return start_order({
     domains: clean_domains(read_domains(certificate)),
-    email: clean_email(body.email),
-    staging: Boolean(body.staging),
-    key_pem: files.key_pem,
-  }, step);
+    email: "",
+    staging: Boolean(body.test_cert || body.dry_run),
+    dry_run: Boolean(body.dry_run),
+    key_pem: body.reuse_key ? zip.privkey.text : "",
+  }, tracker);
 }));
 
 // Part two, shared by new certificates and renewals.
-router.post("/finish", stream_route((body, step) => finish_order(body, step)));
+router.post("/finish", stream_route((body, tracker) => finish_order(body, tracker)));
 
 module.exports = router;
