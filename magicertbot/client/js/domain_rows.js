@@ -19,10 +19,13 @@ export function render_domains(focus_index) {
 }
 
 export function setup_domain_rows(on_change) {
+  const focus_row = (index) => list().querySelector(`[data-domain="${index}"]`).focus();
   const add_domain = () => {
-    // An empty row is still waiting, so we go there instead of adding another.
+    // A repeated or empty row must be fixed first, so we go there instead of adding another.
+    const repeat = show_repeat();
+    if (repeat !== -1) return focus_row(repeat);
     const empty = settings.domains.findIndex((domain) => !domain.trim());
-    if (empty !== -1) return list().querySelector(`[data-domain="${empty}"]`).focus();
+    if (empty !== -1) return focus_row(empty);
     if (settings.domains.length >= 100) return;
     settings.domains.push("");
     render_domains(settings.domains.length - 1);

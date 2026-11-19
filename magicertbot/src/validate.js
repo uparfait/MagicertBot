@@ -5,8 +5,10 @@ const domain_pattern = /^(\*\.)?(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?
 const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function clean_domains(list) {
-  const items = Array.isArray(list) ? list : [];
-  const domains = [...new Set(items.map((item) => String(item).trim().toLowerCase()).filter(Boolean))];
+  const items = (Array.isArray(list) ? list : []).map((item) => String(item).trim().toLowerCase().replace(/\.$/, "")).filter(Boolean);
+  const repeat = items.find((item, index) => items.indexOf(item) !== index);
+  if (repeat) throw make_friendly(`${repeat} is in the list more than once. Each address can only be added once.`);
+  const domains = items;
 
   if (!domains.length) throw make_friendly("Please add at least one domain name, like example.com.");
   if (domains.length > 100) throw make_friendly("One certificate can cover up to 100 domain names.");
